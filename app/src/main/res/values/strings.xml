@@ -8,4 +8,6 @@
     <string name="none">بدون اولویت</string>
     <string name="search_task">جست و جوی فعالیت</string>
     <string name="sort_list">مرتب ساری</string>
+    <string name="more">بیشتر</string>
+    <string name="delete_all">حذف همه</string>
 </resources>

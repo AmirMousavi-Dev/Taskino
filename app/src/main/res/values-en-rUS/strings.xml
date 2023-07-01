@@ -9,4 +9,6 @@
     <string name="none">None Priority</string>
     <string name="search_task">Search Task</string>
     <string name="sort_list">Sort List</string>
+    <string name="more">more</string>
+    <string name="delete_all">Delete all</string>
 </resources>

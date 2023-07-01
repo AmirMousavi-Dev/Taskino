@@ -17,7 +17,7 @@ import ir.codroid.taskino.R
 @Composable
 fun ListScreen(navigateToTaskScreen: (Int) -> Unit) {
     Scaffold(
-        topBar = { ListAppbar({} , {})},
+        topBar = { ListAppbar({} , {} , {})},
         content = {},
         floatingActionButton = { ListScreenFab(onFabClick = navigateToTaskScreen) }
     )
