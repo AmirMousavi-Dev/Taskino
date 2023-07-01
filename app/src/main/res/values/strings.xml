@@ -6,4 +6,5 @@
     <string name="medium">اولویت معمولی</string>
     <string name="low">اولویت پایین</string>
     <string name="none">بدون اولویت</string>
+    <string name="search_task">جست و جوی فعالیت</string>
 </resources>
