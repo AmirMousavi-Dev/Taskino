@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +25,8 @@ import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.ui.component.PriorityItem
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
+import ir.codroid.taskino.ui.theme.topAppbarColor
+import ir.codroid.taskino.ui.theme.topAppbarContentColor
 
 @Composable
 fun ListAppbar(onSearchClicked: () -> Unit, onSortClicked: (Priority) -> Unit , onDelete : () -> Unit) {
@@ -39,7 +42,12 @@ fun DefaultListAppbar(onSearchClicked: () -> Unit, onSortClicked: (Priority) -> 
             SearchAction(onSearchClicked = onSearchClicked)
             SortAction(onSortClicked = onSortClicked)
             MoreAction(onDelete = onDelete)
-        }
+        },
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.topAppbarColor ,
+            titleContentColor = MaterialTheme.colorScheme.topAppbarContentColor,
+            actionIconContentColor = MaterialTheme.colorScheme.topAppbarContentColor,
+        )
     )
 }
 
