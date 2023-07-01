@@ -2,4 +2,9 @@
 <resources>
     <string name="app_name">Taskino</string>
     <string name="fab_add">add fab</string>
+    <string name="tasks">Tasks</string>
+    <string name="high">High Priority</string>
+    <string name="medium">Medium Priority</string>
+    <string name="low">Low Priority</string>
+    <string name="none">None Priority</string>
 </resources>

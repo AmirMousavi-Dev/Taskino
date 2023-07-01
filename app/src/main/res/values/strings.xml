@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">تسکینو</string>
     <string name="fab_add">دکمه فب ادد</string>
+    <string name="tasks">فعالیت ها</string>
+    <string name="high">اولویت بالا</string>
+    <string name="medium">اولویت معمولی</string>
+    <string name="low">اولویت پایین</string>
+    <string name="none">بدون اولویت</string>
 </resources>
