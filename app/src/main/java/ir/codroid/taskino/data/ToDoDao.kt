@@ -31,7 +31,7 @@ interface ToDoDao {
     suspend fun deleteAllTasks()
 
     @Query("SELECT * FROM todo_task_table WHERE title LIKE :search OR description LIKE :search")
-    fun searchTasks(search: String)
+    fun searchTasks(search: String) :Flow<List<ToDoTask>>
 
     @Query("SELECT * FROM todo_task_table ORDER BY CASE WHEN priority LIKE 'L%' THEN 1 WHEN priority LIKE 'M%' THEN 2 WHEN priority LIKE 'H%' THEN 3 END ")
     fun sortByLowPriority(): Flow<List<ToDoTask>>
