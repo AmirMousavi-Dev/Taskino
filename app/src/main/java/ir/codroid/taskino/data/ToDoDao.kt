@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import ir.codroid.taskino.data.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
 
@@ -18,13 +19,16 @@ interface ToDoDao {
     fun getSelectedTask(taskId: Int): Flow<ToDoTask>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertTask(toDoTask: ToDoTask)
+    suspend fun addTask(toDoTask: ToDoTask)
+
+    @Update()
+    suspend fun updateTask(toDoTask: ToDoTask)
 
     @Delete()
-    fun deleteTask(toDoTask: ToDoTask)
+    suspend fun deleteTask(toDoTask: ToDoTask)
 
     @Query("DELETE FROM todo_task_table")
-    fun deleteAllTasks()
+    suspend fun deleteAllTasks()
 
     @Query("SELECT * FROM todo_task_table WHERE title LIKE :search OR description LIKE :search")
     fun searchTasks(search: String)
