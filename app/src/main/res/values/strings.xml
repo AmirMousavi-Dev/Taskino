@@ -7,4 +7,5 @@
     <string name="low">اولویت پایین</string>
     <string name="none">بدون اولویت</string>
     <string name="search_task">جست و جوی فعالیت</string>
+    <string name="sort_list">مرتب ساری</string>
 </resources>

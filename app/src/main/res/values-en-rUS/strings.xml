@@ -8,4 +8,5 @@
     <string name="low">Low Priority</string>
     <string name="none">None Priority</string>
     <string name="search_task">Search Task</string>
+    <string name="sort_list">Sort List</string>
 </resources>
