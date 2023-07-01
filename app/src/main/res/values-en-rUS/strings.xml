@@ -11,4 +11,6 @@
     <string name="sort_list">Sort List</string>
     <string name="more">more</string>
     <string name="delete_all">Delete all</string>
+    <string name="search">Search</string>
+    <string name="close">Close</string>
 </resources>

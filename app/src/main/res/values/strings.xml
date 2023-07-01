@@ -10,4 +10,6 @@
     <string name="sort_list">مرتب ساری</string>
     <string name="more">بیشتر</string>
     <string name="delete_all">حذف همه</string>
+    <string name="search">جستجو</string>
+    <string name="close">بستن</string>
 </resources>

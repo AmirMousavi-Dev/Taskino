@@ -1,7 +1,12 @@
 package ir.codroid.taskino.ui.screen.list
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -9,7 +14,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -18,24 +26,45 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.ui.component.PriorityItem
+import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
+import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
+import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor
 
 @Composable
-fun ListAppbar(onSearchClicked: () -> Unit, onSortClicked: (Priority) -> Unit , onDelete : () -> Unit) {
-    DefaultListAppbar(onSearchClicked = onSearchClicked, onSortClicked = onSortClicked ,onDelete = onDelete)
+fun ListAppbar(
+    onSearchClicked: () -> Unit,
+    onSortClicked: (Priority) -> Unit,
+    onDelete: () -> Unit
+) {
+    DefaultListAppbar(
+        onSearchClicked = onSearchClicked,
+        onSortClicked = onSortClicked,
+        onDelete = onDelete
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DefaultListAppbar(onSearchClicked: () -> Unit, onSortClicked: (Priority) -> Unit , onDelete : () -> Unit) {
+fun DefaultListAppbar(
+    onSearchClicked: () -> Unit,
+    onSortClicked: (Priority) -> Unit,
+    onDelete: () -> Unit
+) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.tasks)) },
         actions = {
@@ -44,10 +73,10 @@ fun DefaultListAppbar(onSearchClicked: () -> Unit, onSortClicked: (Priority) -> 
             MoreAction(onDelete = onDelete)
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.topAppbarColor ,
+            containerColor = MaterialTheme.colorScheme.topAppbarColor,
             titleContentColor = MaterialTheme.colorScheme.topAppbarContentColor,
             actionIconContentColor = MaterialTheme.colorScheme.topAppbarContentColor,
-        )
+        ),
     )
 }
 
@@ -100,7 +129,7 @@ fun SortAction(onSortClicked: (Priority) -> Unit) {
 }
 
 @Composable
-fun MoreAction (onDelete : () -> Unit) {
+fun MoreAction(onDelete: () -> Unit) {
 
     var expanded by remember {
         mutableStateOf(false)
@@ -114,11 +143,13 @@ fun MoreAction (onDelete : () -> Unit) {
     }
     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
         DropdownMenuItem(
-            text = { Text(
-                text = stringResource(id = R.string.delete_all),
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.titleMedium,
-            )},
+            text = {
+                Text(
+                    text = stringResource(id = R.string.delete_all),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            },
             onClick = {
                 onDelete()
                 expanded = false
@@ -127,8 +158,80 @@ fun MoreAction (onDelete : () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchAppbar(
+    text: String,
+    onTextChanged: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(TOP_APP_BAR_HEIGHT),
+        shadowElevation = 4.dp,
+        color = MaterialTheme.colorScheme.topAppbarColor
+    ) {
+        TextField(
+            value = text,
+            onValueChange = {
+                onTextChanged(it)
+            }, colors = TextFieldDefaults.textFieldColors(
+                cursorColor = MaterialTheme.colorScheme.topAppbarColor,
+                focusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                containerColor = Color.Transparent
+            ),
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.search),
+                    color = Color.White,
+                    modifier = Modifier.alpha(MEDIUM_ALPHA)
+                )
+            },
+            textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.topAppbarContentColor,
+                fontSize = MaterialTheme.typography.titleMedium.fontSize
+            ),
+            singleLine = true,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(id = R.string.search),
+                    tint = Color.White,
+                    modifier = Modifier.alpha(DISABLE_ALPHA)
+                )
+            },
+            trailingIcon = {
+                IconButton(onClick = { onCloseClicked() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = stringResource(id = R.string.close),
+                        tint = MaterialTheme.colorScheme.topAppbarContentColor,
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(
+                onSearch = { onSearchClicked(text) }
+            ))
+    }
+}
+
 @Composable
 @Preview
 fun PreviewListAppbar() {
-    ListAppbar({}, {} , {})
+    ListAppbar({}, {}, {})
+}
+
+@Composable
+@Preview
+fun PreviewSearchAppbar() {
+    SearchAppbar(
+        text = "",
+        onTextChanged = {},
+        onCloseClicked = { /*TODO*/ },
+        onSearchClicked = {})
 }
