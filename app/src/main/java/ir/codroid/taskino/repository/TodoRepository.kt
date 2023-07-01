@@ -1,9 +1,11 @@
 package ir.codroid.taskino.repository
 
+import dagger.hilt.android.scopes.ViewModelScoped
 import ir.codroid.taskino.data.ToDoDao
 import ir.codroid.taskino.data.model.ToDoTask
 import javax.inject.Inject
 
+@ViewModelScoped
 class TodoRepository @Inject constructor(private val toDoDao: ToDoDao) {
 
     val getAllTasks = toDoDao.getAllTasks()
