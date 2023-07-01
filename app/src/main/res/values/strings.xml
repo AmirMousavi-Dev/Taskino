@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Taskino</string>
+    <string name="app_name">تسکینو</string>
+    <string name="fab_add">دکمه فب ادد</string>
 </resources>
