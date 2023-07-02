@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -20,22 +22,37 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
+import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
 
 @Composable
-fun ListContent() {
-
+fun ListContent(
+    tasks: List<ToDoTask>,
+    navigationToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT)) {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            ListItem(toDoTask = task, navigationToTaskScreen = navigationToTaskScreen)
+        }
+    }
 }
 
 @Composable
 fun ListItem(
-    toDoTask: ToDoTask, navigationToTaskScreen: (taskId: Int) -> Unit
+    toDoTask: ToDoTask,
+    navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
     Surface(modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.listItemBackgroundColor,
@@ -65,7 +82,7 @@ fun ListItem(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f) ,
+                        .weight(1f),
                     contentAlignment = Alignment.TopEnd
                 ) {
                     Canvas(modifier = Modifier.size(PRIORITY_INDICATOR_SIZE)) {
@@ -90,6 +107,9 @@ fun ListItem(
 @Preview
 fun PreviewListContent() {
     ListItem(toDoTask = ToDoTask(
-        0, "This is Title for test title design", "Some Task To DO , please do that , this text is for testing description design so I have to write some random text here .", Priority.HIGH
+        0,
+        "This is Title for test title design",
+        "Some Task To DO , please do that , this text is for testing description design so I have to write some random text here .",
+        Priority.HIGH
     ), navigationToTaskScreen = {})
 }
