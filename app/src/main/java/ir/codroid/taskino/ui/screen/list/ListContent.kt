@@ -39,8 +39,19 @@ fun ListContent(
     tasks: List<ToDoTask>,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
-    LazyColumn(modifier = Modifier.
-    padding(top = TOP_APP_BAR_HEIGHT)
+    if (tasks.isEmpty())
+        EmptyList()
+    else
+        DisplayTasks(tasks = tasks, navigationToTaskScreen = navigationToTaskScreen)
+}
+
+@Composable
+fun DisplayTasks(
+    tasks: List<ToDoTask>,
+    navigationToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn(modifier = Modifier
+        .padding(top = TOP_APP_BAR_HEIGHT)
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.listItemBackgroundColor)
     ) {

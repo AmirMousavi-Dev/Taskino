@@ -12,4 +12,5 @@
     <string name="delete_all">حذف همه</string>
     <string name="search">جستجو</string>
     <string name="close">بستن</string>
+    <string name="no_tasks_found">فعالیتی پیدا نشد.</string>
 </resources>
