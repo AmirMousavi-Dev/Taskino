@@ -2,8 +2,10 @@
 
 package ir.codroid.taskino.ui.screen.list
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,22 +29,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
 import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
+import ir.codroid.taskino.util.RequestState
 
 @Composable
 fun ListContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty())
-        EmptyList()
-    else
-        DisplayTasks(tasks = tasks, navigationToTaskScreen = navigationToTaskScreen)
+    when (tasks) {
+        is RequestState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                LoadingCircle(isSystemDark = isSystemInDarkTheme())
+            }
+        }
+        is RequestState.Success -> {
+            if (tasks.data.isEmpty())
+                EmptyList()
+            else
+                DisplayTasks(tasks = tasks.data, navigationToTaskScreen = navigationToTaskScreen)
+        }
+        is RequestState.NotInitialize -> {
+            Log.e("List_Screen" , "data is not initialize")
+        }
+        is RequestState.Error -> {
+            Log.e("List_Screen" , tasks.error.message ?: "task screen error")
+        }
+    }
+    if (tasks == RequestState.Loading) {
+
+    }
+
 }
 
 @Composable

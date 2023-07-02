@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.repository.TodoRepository
+import ir.codroid.taskino.util.RequestState
 import ir.codroid.taskino.util.SearchAppbarState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -19,14 +21,21 @@ class ListScreenViewModel @Inject constructor(private val repository: TodoReposi
     val searchAppbarState : MutableState<SearchAppbarState> = mutableStateOf(SearchAppbarState.CLOSED)
     val searchAppbarTextState : MutableState<String> = mutableStateOf("")
 
-    private val _taskList = MutableStateFlow<List<ToDoTask>>(emptyList())
+    private val _taskList = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.NotInitialize)
     val taskList = _taskList.asStateFlow()
 
     fun getAllTask () {
+        _taskList.value = RequestState.Loading
+        try {
+
         viewModelScope.launch {
             repository.getAllTasks.collect{
-                _taskList.emit(it)
+                delay(1000)
+                _taskList.emit(RequestState.Success(it))
             }
+        }
+        } catch (e : Exception) {
+            _taskList.value = RequestState.Error(e)
         }
     }
 }
