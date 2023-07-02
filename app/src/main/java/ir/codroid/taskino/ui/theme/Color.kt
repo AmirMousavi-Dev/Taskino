@@ -17,23 +17,29 @@ val LightGray = Color(0xFFFCFCFC)
 val MediumGray = Color(0xFF9C9C9C)
 val DarkGray = Color(0xFF141414)
 
+// region Priority Color
 val highPriorityColor = Color(0xFFFF4646)
 val mediumPriorityColor = Color(0xFFFFC114)
 val lowPriorityColor = Color(0xFF00C980)
 val nonePriorityColor = Color(0xFFFFFFFF)
+// endregion Priority Color
 
+// region Top Appbar Color
 val ColorScheme.topAppbarColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color.Black else Purple40
 val ColorScheme.topAppbarContentColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) LightGray else Color.White
+// endregion Top Appbar Color
 
+
+// region List Item  Color
 val ColorScheme.listItemBackgroundColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) DarkGray else Color.White
-
 val ColorScheme.listItemTextColor: Color
     @Composable
-    get() = if (isSystemInDarkTheme()) Color.White else DarkGray
+    get() = if (isSystemInDarkTheme()) LightGray else DarkGray
+// endregion List Item Background Color
 
