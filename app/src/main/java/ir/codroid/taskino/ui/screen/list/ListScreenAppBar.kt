@@ -44,18 +44,46 @@ import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor
+import ir.codroid.taskino.ui.viewmodel.ListScreenViewModel
+import ir.codroid.taskino.util.SearchAppbarState
+import ir.codroid.taskino.util.TrailingIconState
 
 @Composable
 fun ListAppbar(
+    viewModel: ListScreenViewModel,
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
     onDelete: () -> Unit
 ) {
-    DefaultListAppbar(
-        onSearchClicked = onSearchClicked,
-        onSortClicked = onSortClicked,
-        onDelete = onDelete
-    )
+    val searchAppbarState = viewModel.searchAppbarState
+    val searchAppbarTextState = viewModel.searchAppbarTextState
+    when (searchAppbarState.value) {
+        SearchAppbarState.CLOSED -> {
+            DefaultListAppbar(
+                onSearchClicked = {
+                    searchAppbarState.value = SearchAppbarState.OPENED
+                },
+                onSortClicked = onSortClicked,
+                onDelete = onDelete
+            )
+        }
+
+        else -> {
+            SearchAppbar(
+                text = searchAppbarTextState.value,
+                onTextChanged = { newText ->
+                    searchAppbarTextState.value = newText
+                },
+                onCloseClicked = {
+                    searchAppbarState.value = SearchAppbarState.CLOSED
+                },
+                onSearchClicked = {
+
+                }
+            )
+        }
+    }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -166,6 +194,10 @@ fun SearchAppbar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
 ) {
+    var trailingIconState by remember {
+        mutableStateOf(TrailingIconState.READY_TO_DELETE)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,7 +237,23 @@ fun SearchAppbar(
                 )
             },
             trailingIcon = {
-                IconButton(onClick = { onCloseClicked() }) {
+                IconButton(onClick = {
+                    when (trailingIconState) {
+                        TrailingIconState.READY_TO_CLOSE -> {
+                            if (text.isNotEmpty())
+                                onTextChanged("")
+                            else {
+                                onCloseClicked()
+                                trailingIconState = TrailingIconState.READY_TO_DELETE
+                            }
+                        }
+
+                        TrailingIconState.READY_TO_DELETE -> {
+                            onTextChanged("")
+                            trailingIconState = TrailingIconState.READY_TO_CLOSE
+                        }
+                    }
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Close,
                         contentDescription = stringResource(id = R.string.close),
@@ -218,20 +266,4 @@ fun SearchAppbar(
                 onSearch = { onSearchClicked(text) }
             ))
     }
-}
-
-@Composable
-@Preview
-fun PreviewListAppbar() {
-    ListAppbar({}, {}, {})
-}
-
-@Composable
-@Preview
-fun PreviewSearchAppbar() {
-    SearchAppbar(
-        text = "",
-        onTextChanged = {},
-        onCloseClicked = { /*TODO*/ },
-        onSearchClicked = {})
 }

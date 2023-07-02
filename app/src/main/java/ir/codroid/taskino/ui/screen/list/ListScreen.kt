@@ -10,14 +10,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.codroid.taskino.R
+import ir.codroid.taskino.ui.viewmodel.ListScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListScreen(navigateToTaskScreen: (Int) -> Unit) {
+fun ListScreen(
+    viewModel : ListScreenViewModel = hiltViewModel(),
+    navigateToTaskScreen: (Int) -> Unit
+) {
     Scaffold(
-        topBar = { ListAppbar({} , {} , {})},
+        topBar = { ListAppbar(
+            viewModel = viewModel,
+            onSearchClicked = {},
+            onSortClicked = {},
+            onDelete = {})
+        },
         content = {},
         floatingActionButton = { ListScreenFab(onFabClick = navigateToTaskScreen) }
     )
