@@ -27,9 +27,13 @@ import ir.codroid.taskino.util.Action
 
 @Composable
 fun TaskAppbar(
+    task: ToDoTask?,
     navigateToListScreen: (Action) -> Unit
 ) {
-    NewTaskAppbar(navigateToListScreen = navigateToListScreen)
+    if (task == null)
+        NewTaskAppbar(navigateToListScreen = navigateToListScreen)
+    else
+        ExistingTaskAppbar(selectedTask = task, navigateToListScreen = navigateToListScreen)
 
 }
 

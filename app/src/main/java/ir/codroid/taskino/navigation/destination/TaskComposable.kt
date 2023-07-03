@@ -22,7 +22,10 @@ fun NavGraphBuilder.taskComposable(
         })
     ) { navBackStackEntry ->
         val taskId = navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
-        TaskScreen(navigateToListScreen = navigateToTaskScreen)
+        TaskScreen(
+            taskId = taskId,
+            navigateToListScreen = navigateToTaskScreen
+        )
 
     }
 }
