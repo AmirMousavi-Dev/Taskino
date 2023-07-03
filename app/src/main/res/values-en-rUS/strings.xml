@@ -16,4 +16,6 @@
     <string name="no_tasks_found">No tasks found.</string>
     <string name="add_task">Add task</string>
     <string name="back_arrow">Back arrow</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
 </resources>

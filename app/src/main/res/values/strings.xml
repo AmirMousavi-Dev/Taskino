@@ -15,4 +15,6 @@
     <string name="no_tasks_found">فعالیتی پیدا نشد.</string>
     <string name="add_task">افزودن فعالیت</string>
     <string name="back_arrow">فلش برگشت</string>
+    <string name="delete">حذف</string>
+    <string name="update">بروزرسانی</string>
 </resources>
