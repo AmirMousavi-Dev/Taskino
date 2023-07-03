@@ -13,4 +13,6 @@
     <string name="search">جستجو</string>
     <string name="close">بستن</string>
     <string name="no_tasks_found">فعالیتی پیدا نشد.</string>
+    <string name="add_task">افزودن فعالیت</string>
+    <string name="back_arrow">فلش برگشت</string>
 </resources>

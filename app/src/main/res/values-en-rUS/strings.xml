@@ -14,4 +14,6 @@
     <string name="search">Search</string>
     <string name="close">Close</string>
     <string name="no_tasks_found">No tasks found.</string>
+    <string name="add_task">Add task</string>
+    <string name="back_arrow">Back arrow</string>
 </resources>
