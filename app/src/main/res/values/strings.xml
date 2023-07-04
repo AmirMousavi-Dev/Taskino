@@ -17,4 +17,5 @@
     <string name="back_arrow">فلش برگشت</string>
     <string name="delete">حذف</string>
     <string name="update">بروزرسانی</string>
+    <string name="drop_down_arrow_icon">ایکون فلش  روبه پایین</string>
 </resources>

@@ -18,4 +18,5 @@
     <string name="back_arrow">Back arrow</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
+    <string name="drop_down_arrow_icon">Drop down arrow con</string>
 </resources>
