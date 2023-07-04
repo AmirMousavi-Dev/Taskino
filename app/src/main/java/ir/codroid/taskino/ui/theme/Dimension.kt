@@ -18,3 +18,5 @@ val EMPTY_LIST_IMAGE_SIZE = 120.dp
 val high_ALPHA = 1f
 val MEDIUM_ALPHA = 0.5f
 val DISABLE_ALPHA = 0.3f
+
+val MAX_TITLE_LENGTH = 32

@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.repository.TodoRepository
+import ir.codroid.taskino.ui.theme.MAX_TITLE_LENGTH
 import ir.codroid.taskino.util.RequestState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -53,5 +54,10 @@ class TaskScreenViewModel @Inject constructor(
             description.value = ""
             priority.value = Priority.LOW
         }
+    }
+
+    fun updateTitle (newTitle :String) {
+        if (newTitle.length < MAX_TITLE_LENGTH)
+            title.value = newTitle
     }
 }
