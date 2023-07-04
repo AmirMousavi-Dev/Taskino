@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.viewmodel.TaskScreenViewModel
@@ -52,7 +53,16 @@ fun TaskScreen(
                         task = selectedTask, navigateToListScreen = navigateToListScreen
                     )
                 },
-                content = {}
+                content = {
+                    TaskContent(
+                        title = "",
+                        onTitleChanged = {},
+                        description = "",
+                        onDescriptionChanged = {},
+                        priority = Priority.HIGH,
+                        onPrioritySelected = {}
+                    )
+                }
             )
         }
 

@@ -53,7 +53,8 @@ fun PriorityDropDownMenu(
             .clickable { expanded = !expanded }
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLE_ALPHA)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLE_ALPHA),
+                shape = MaterialTheme.shapes.small
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -84,22 +85,30 @@ fun PriorityDropDownMenu(
                 contentDescription = stringResource(id = R.string.drop_down_arrow_icon)
             )
         }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth(fraction = 0.94f)
+        ) {
+            DropdownMenuItem(
+                text = { PriorityItem(priority = Priority.LOW) },
+                onClick = {
+                    onPriorityClicked(Priority.LOW)
+                    expanded = false
+                })
+            DropdownMenuItem(
+                text = { PriorityItem(priority = Priority.MEDIUM) },
+                onClick = {
+                    onPriorityClicked(Priority.MEDIUM)
+                    expanded = false})
+            DropdownMenuItem(
+                text = { PriorityItem(priority = Priority.HIGH) },
+                onClick = {
+                    onPriorityClicked(Priority.HIGH)
+                    expanded = false})
+        }
     }
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { expanded = false },
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        DropdownMenuItem(
-            text = { PriorityItem(priority = Priority.LOW) },
-            onClick = { onPriorityClicked(Priority.LOW) })
-        DropdownMenuItem(
-            text = { PriorityItem(priority = Priority.MEDIUM) },
-            onClick = { onPriorityClicked(Priority.MEDIUM) })
-        DropdownMenuItem(
-            text = { PriorityItem(priority = Priority.HIGH) },
-            onClick = { onPriorityClicked(Priority.HIGH) })
-    }
+
 }
 
 @Composable

@@ -18,4 +18,6 @@
     <string name="delete">حذف</string>
     <string name="update">بروزرسانی</string>
     <string name="drop_down_arrow_icon">ایکون فلش  روبه پایین</string>
+    <string name="title">عنوان</string>
+    <string name="description">توضیحات</string>
 </resources>
