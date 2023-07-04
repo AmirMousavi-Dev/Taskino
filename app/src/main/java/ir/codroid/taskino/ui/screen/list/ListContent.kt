@@ -34,6 +34,7 @@ import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
 import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
+import ir.codroid.taskino.ui.theme.TOP_PADDING
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
 import ir.codroid.taskino.util.RequestState
@@ -74,7 +75,7 @@ fun DisplayTasks(
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
     LazyColumn(modifier = Modifier
-        .padding(top = TOP_APP_BAR_HEIGHT)
+        .padding(top = TOP_PADDING)
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.listItemBackgroundColor)
     ) {

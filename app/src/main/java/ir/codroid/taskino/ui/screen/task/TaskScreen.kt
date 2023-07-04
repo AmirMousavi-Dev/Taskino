@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,13 +30,18 @@ fun TaskScreen(
     taskId: Int,
     navigateToListScreen: (Action) -> Unit
 ) {
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         viewModel.getSelectedTask(taskId)
     }
     val task by viewModel.selectedTask.collectAsState()
+    val title: String by viewModel.title
+    val description: String by viewModel.description
+    val priority: Priority by viewModel.priority
+
     when (task) {
         is RequestState.NotInitialize -> {
         }
+
         is RequestState.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 LoadingCircle(isSystemDark = isSystemInDarkTheme())
@@ -54,13 +58,22 @@ fun TaskScreen(
                     )
                 },
                 content = {
+                    LaunchedEffect(key1 = true) {
+                        viewModel.updateTaskFiled(selectedTask)
+                    }
                     TaskContent(
-                        title = "",
-                        onTitleChanged = {},
-                        description = "",
-                        onDescriptionChanged = {},
-                        priority = Priority.HIGH,
-                        onPrioritySelected = {}
+                        title = title,
+                        onTitleChanged = { title ->
+                            viewModel.title.value = title
+                        },
+                        description = description,
+                        onDescriptionChanged = { description ->
+                            viewModel.description.value = description
+                        },
+                        priority = priority,
+                        onPrioritySelected = { priority ->
+                            viewModel.priority.value = priority
+                        }
                     )
                 }
             )

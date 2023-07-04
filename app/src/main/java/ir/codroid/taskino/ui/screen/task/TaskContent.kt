@@ -20,6 +20,7 @@ import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.ui.component.PriorityDropDownMenu
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.MEDIUM_PADDING
+import ir.codroid.taskino.ui.theme.TOP_PADDING
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +36,7 @@ fun TaskContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(LARGE_PADDING)
+            .padding(start = LARGE_PADDING , end = LARGE_PADDING , bottom = LARGE_PADDING , top = TOP_PADDING+ LARGE_PADDING)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),

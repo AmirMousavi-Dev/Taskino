@@ -1,8 +1,11 @@
 package ir.codroid.taskino.ui.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.repository.TodoRepository
 import ir.codroid.taskino.util.RequestState
@@ -16,7 +19,13 @@ class TaskScreenViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
 
-    private val _selectedTask = MutableStateFlow<RequestState<ToDoTask?>>(RequestState.NotInitialize)
+    val id: MutableState<Int> = mutableStateOf(0)
+    val title: MutableState<String> = mutableStateOf("")
+    val description: MutableState<String> = mutableStateOf("")
+    val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
+
+    private val _selectedTask =
+        MutableStateFlow<RequestState<ToDoTask?>>(RequestState.NotInitialize)
     val selectedTask = _selectedTask.asStateFlow()
 
     fun getSelectedTask(taskId: Int) {
@@ -29,6 +38,20 @@ class TaskScreenViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             _selectedTask.value = RequestState.Error(e)
+        }
+    }
+
+    fun updateTaskFiled(selectedTask: ToDoTask?) {
+        if (selectedTask != null) {
+            id.value = selectedTask.id
+            title.value = selectedTask.title
+            description.value = selectedTask.description
+            priority.value = selectedTask.priority
+        } else {
+            id.value = 0
+            title.value = ""
+            description.value = ""
+            priority.value = Priority.LOW
         }
     }
 }
