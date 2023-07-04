@@ -20,4 +20,5 @@
     <string name="drop_down_arrow_icon">ایکون فلش  روبه پایین</string>
     <string name="title">عنوان</string>
     <string name="description">توضیحات</string>
+    <string name="fields_empty">مقادیر خالی هستند</string>
 </resources>

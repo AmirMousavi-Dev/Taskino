@@ -60,4 +60,7 @@ class TaskScreenViewModel @Inject constructor(
         if (newTitle.length < MAX_TITLE_LENGTH)
             title.value = newTitle
     }
+
+    fun validateFields () =
+        title.value.isNotEmpty() && description.value.isNotEmpty()
 }

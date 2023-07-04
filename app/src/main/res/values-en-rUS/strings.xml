@@ -21,4 +21,5 @@
     <string name="drop_down_arrow_icon">Drop down arrow con</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="fields_empty">Fields Empty.</string>
 </resources>
