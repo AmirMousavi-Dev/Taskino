@@ -1,22 +1,32 @@
 package ir.codroid.taskino.navigation.destination
 
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.codroid.taskino.ui.screen.list.ListScreen
+import ir.codroid.taskino.ui.viewmodel.SharedViewModel
 import ir.codroid.taskino.util.Constants.LIST_ARGUMENT_KEY
 import ir.codroid.taskino.util.Constants.LIST_SCREEN
+import ir.codroid.taskino.util.toAction
 
 fun NavGraphBuilder.listComposable(
-    navigateToTaskScreen: (Int) -> Unit
+    navigateToTaskScreen: (Int) -> Unit,
+    viewModel: SharedViewModel
 ) {
     composable(
         route = LIST_SCREEN,
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
-    ) {
-        ListScreen(navigateToTaskScreen = navigateToTaskScreen)
+    ) { navBackStackEntry ->
+        val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
+        LaunchedEffect(key1 = action) {
+            Log.w("3169", action.toString())
+            viewModel.action.value = action
+        }
+        ListScreen(navigateToTaskScreen = navigateToTaskScreen, viewModel = viewModel)
     }
 }

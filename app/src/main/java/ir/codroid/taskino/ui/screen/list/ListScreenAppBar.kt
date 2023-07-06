@@ -2,7 +2,6 @@ package ir.codroid.taskino.ui.screen.list
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -28,29 +27,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.ui.component.PriorityItem
 import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
-import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor
-import ir.codroid.taskino.ui.viewmodel.ListScreenViewModel
+import ir.codroid.taskino.ui.viewmodel.SharedViewModel
 import ir.codroid.taskino.util.SearchAppbarState
 import ir.codroid.taskino.util.TrailingIconState
 
 @Composable
 fun ListAppbar(
-    viewModel: ListScreenViewModel,
+    viewModel: SharedViewModel,
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
     onDelete: () -> Unit

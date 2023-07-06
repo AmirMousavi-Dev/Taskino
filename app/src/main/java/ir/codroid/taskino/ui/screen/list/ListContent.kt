@@ -26,14 +26,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
-import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.TOP_PADDING
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
@@ -62,9 +60,6 @@ fun ListContent(
         is RequestState.Error -> {
             Log.e("List_Screen" , tasks.error.message ?: "task screen error")
         }
-    }
-    if (tasks == RequestState.Loading) {
-
     }
 
 }
