@@ -1,6 +1,7 @@
 package ir.codroid.taskino.ui.screen.list
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import ir.codroid.taskino.R
 import ir.codroid.taskino.ui.viewmodel.SharedViewModel
@@ -33,6 +35,7 @@ fun ListScreen(
     LaunchedEffect(key1 = true) {
         viewModel.getAllTasks()
     }
+    val context = LocalContext.current
     val allTasks by viewModel.allTasks.collectAsState()
     val searchedTasks by viewModel.searchedTasks.collectAsState()
     val action by viewModel.action
@@ -42,6 +45,7 @@ fun ListScreen(
         snackBarHostState = snackBarHostState,
         taskTitle = viewModel.title.value,
         action = action,
+        context = context,
         onUndoClicked = {
             viewModel.action.value = it
         }
@@ -58,7 +62,9 @@ fun ListScreen(
                 },
                 onSortClicked = {},
                 searchAppbarState = searchAppbarState,
-                onDelete = {})
+                onDelete = {
+                    viewModel.action.value = Action.DELETE_ALL
+                })
         },
         content = {
             ListContent(
@@ -90,6 +96,7 @@ fun DisplaySnackBar(
     snackBarHostState: SnackbarHostState,
     taskTitle: String,
     action: Action,
+    context: Context,
     onUndoClicked: (Action) -> Unit,
     handleDatabaseAction: () -> Unit
 ) {
@@ -99,8 +106,8 @@ fun DisplaySnackBar(
         if (action != Action.NO_ACTION)
             scope.launch {
                 val snackBarResult = snackBarHostState.showSnackbar(
-                    "${action.name} : $taskTitle",
-                    actionLabel = setSBActionLabel(action),
+                    setSBMessage(action , taskTitle , context),
+                    actionLabel = context.getString(setSBActionLabel(action)),
                     withDismissAction = false,
                     duration = SnackbarDuration.Short
                 )
@@ -111,7 +118,9 @@ fun DisplaySnackBar(
     }
 }
 
-private fun setSBActionLabel(action: Action) = if (action == Action.DELETE) "UNDO" else "OK"
+private fun setSBActionLabel(action: Action) = if (action == Action.DELETE) R.string.undo else R.string.ok
+private fun setSBMessage(action: Action , taskTitle: String , context: Context)
+= if (action == Action.DELETE_ALL) context.getString( R.string.delete_all_tasks) else "${action.title} : $taskTitle"
 
 private fun undoDeletedTask(
     action: Action,

@@ -22,4 +22,9 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="fields_empty">Fields Empty.</string>
+    <string name="delete_all_tasks">Delete all tasks</string>
+    <string name="add">Add</string>
+    <string name="undo_delete">Undo delete</string>
+    <string name="undo">Undo</string>
+    <string name="ok">OK</string>
 </resources>

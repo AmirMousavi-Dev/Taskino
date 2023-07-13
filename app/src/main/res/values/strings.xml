@@ -21,4 +21,9 @@
     <string name="title">عنوان</string>
     <string name="description">توضیحات</string>
     <string name="fields_empty">مقادیر خالی هستند</string>
+    <string name="delete_all_tasks">حذف همه‌ی فعالیت ها</string>
+    <string name="add">افزودن</string>
+    <string name="undo_delete">لغو حدف</string>
+    <string name="undo">لغو</string>
+    <string name="ok">باشه</string>
 </resources>

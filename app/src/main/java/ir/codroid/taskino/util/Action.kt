@@ -1,12 +1,15 @@
 package ir.codroid.taskino.util
 
-enum class Action {
-    ADD,
-    UPDATE,
-    DELETE,
-    DELETE_ALL,
-    UNDO,
-    NO_ACTION,
+import androidx.annotation.StringRes
+import ir.codroid.taskino.R
+
+enum class Action(@StringRes val title : Int) {
+    ADD(R.string.add),
+    UPDATE(R.string.update),
+    DELETE(R.string.delete),
+    DELETE_ALL(R.string.delete_all),
+    UNDO(R.string.undo_delete),
+    NO_ACTION(0),
 }
 fun String?.toAction() = when{
     this == "ADD" -> {
