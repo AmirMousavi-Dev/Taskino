@@ -27,4 +27,8 @@
     <string name="undo_delete">Undo delete</string>
     <string name="undo">Undo</string>
     <string name="ok">OK</string>
+    <string name="ad_delete_title">Delete \'%1$s\'?</string>
+    <string name="ad_delete_message">Are you want to delete \'%1$s\' ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

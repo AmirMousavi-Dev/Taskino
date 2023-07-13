@@ -26,4 +26,8 @@
     <string name="undo_delete">لغو حدف</string>
     <string name="undo">لغو</string>
     <string name="ok">باشه</string>
+    <string name="ad_delete_title">حذف \'%1$s\'?</string>
+    <string name="ad_delete_message">ایا میخواهید \'%1$s\' را حذف کنید ؟</string>
+    <string name="yes">تائید</string>
+    <string name="no">خیر</string>
 </resources>
