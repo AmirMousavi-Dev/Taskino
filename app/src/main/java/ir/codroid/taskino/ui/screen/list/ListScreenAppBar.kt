@@ -1,5 +1,6 @@
 package ir.codroid.taskino.ui.screen.list
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
@@ -47,17 +48,17 @@ import ir.codroid.taskino.util.TrailingIconState
 @Composable
 fun ListAppbar(
     viewModel: SharedViewModel,
-    onSearchClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
     onSortClicked: (Priority) -> Unit,
+    searchAppbarState: SearchAppbarState,
     onDelete: () -> Unit
 ) {
-    val searchAppbarState = viewModel.searchAppbarState
     val searchAppbarTextState = viewModel.searchAppbarTextState
-    when (searchAppbarState.value) {
+    when (searchAppbarState) {
         SearchAppbarState.CLOSED -> {
             DefaultListAppbar(
                 onSearchClicked = {
-                    searchAppbarState.value = SearchAppbarState.OPENED
+                    viewModel.searchAppbarState.value = SearchAppbarState.OPENED
                 },
                 onSortClicked = onSortClicked,
                 onDelete = onDelete
@@ -71,10 +72,10 @@ fun ListAppbar(
                     searchAppbarTextState.value = newText
                 },
                 onCloseClicked = {
-                    searchAppbarState.value = SearchAppbarState.CLOSED
+                    viewModel.searchAppbarState.value = SearchAppbarState.CLOSED
                 },
                 onSearchClicked = {
-
+                    onSearchClicked(it)
                 }
             )
         }
@@ -259,7 +260,8 @@ fun SearchAppbar(
             },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
-                onSearch = { onSearchClicked(text) }
+                onSearch = {
+                    onSearchClicked(text) }
             ))
     }
 }

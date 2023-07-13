@@ -26,47 +26,85 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
-import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.TOP_PADDING
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
 import ir.codroid.taskino.util.RequestState
+import ir.codroid.taskino.util.SearchAppbarState
 
 @Composable
 fun ListContent(
-    tasks: RequestState<List<ToDoTask>>,
+    allTasks: RequestState<List<ToDoTask>>,
+    searchTasks: RequestState<List<ToDoTask>>,
+    searchAppbarState: SearchAppbarState,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
-    when (tasks) {
-        is RequestState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                LoadingCircle(isSystemDark = isSystemInDarkTheme())
+
+    if (searchAppbarState == SearchAppbarState.TRIGGERED)
+        when (searchTasks) {
+            is RequestState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    LoadingCircle(isSystemDark = isSystemInDarkTheme())
+                }
+            }
+
+            is RequestState.Success -> {
+                HandleListContent(
+                    tasks = searchTasks.data,
+                    navigationToTaskScreen = navigationToTaskScreen
+                )
+            }
+
+            is RequestState.NotInitialize -> {
+                Log.e("List_Screen", "data is not initialize")
+            }
+
+            is RequestState.Error -> {
+                Log.e("List_Screen", searchTasks.error.message ?: "task screen error")
             }
         }
-        is RequestState.Success -> {
-            if (tasks.data.isEmpty())
-                EmptyList()
-            else
-                DisplayTasks(tasks = tasks.data, navigationToTaskScreen = navigationToTaskScreen)
-        }
-        is RequestState.NotInitialize -> {
-            Log.e("List_Screen" , "data is not initialize")
-        }
-        is RequestState.Error -> {
-            Log.e("List_Screen" , tasks.error.message ?: "task screen error")
-        }
-    }
-    if (tasks == RequestState.Loading) {
+    else
+        when (allTasks) {
+            is RequestState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    LoadingCircle(isSystemDark = isSystemInDarkTheme())
+                }
+            }
 
-    }
+            is RequestState.Success -> {
+                HandleListContent(
+                    tasks = allTasks.data,
+                    navigationToTaskScreen = navigationToTaskScreen
+                )
+            }
 
+            is RequestState.NotInitialize -> {
+                Log.e("List_Screen", "data is not initialize")
+            }
+
+            is RequestState.Error -> {
+                Log.e("List_Screen", allTasks.error.message ?: "task screen error")
+            }
+        }
+
+
+}
+
+@Composable
+fun HandleListContent(
+    tasks: List<ToDoTask>,
+    navigationToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks.isEmpty())
+        EmptyList()
+    else
+        DisplayTasks(tasks = tasks, navigationToTaskScreen = navigationToTaskScreen)
 }
 
 @Composable
@@ -74,10 +112,11 @@ fun DisplayTasks(
     tasks: List<ToDoTask>,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
-    LazyColumn(modifier = Modifier
-        .padding(top = TOP_PADDING)
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.listItemBackgroundColor)
+    LazyColumn(
+        modifier = Modifier
+            .padding(top = TOP_PADDING)
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.listItemBackgroundColor)
     ) {
         items(
             items = tasks,

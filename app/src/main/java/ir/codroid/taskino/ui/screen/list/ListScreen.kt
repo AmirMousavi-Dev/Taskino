@@ -31,11 +31,13 @@ fun ListScreen(
     navigateToTaskScreen: (Int) -> Unit
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getAllTask()
+        viewModel.getAllTasks()
     }
-    val tasks by viewModel.taskList.collectAsState()
+    val allTasks by viewModel.allTasks.collectAsState()
+    val searchedTasks by viewModel.searchedTasks.collectAsState()
     val action by viewModel.action
     val snackBarHostState = remember { SnackbarHostState() }
+    val searchAppbarState = viewModel.searchAppbarState.value
     DisplaySnackBar(
         snackBarHostState = snackBarHostState,
         taskTitle = viewModel.title.value,
@@ -51,13 +53,18 @@ fun ListScreen(
         topBar = {
             ListAppbar(
                 viewModel = viewModel,
-                onSearchClicked = {},
+                onSearchClicked = {
+                    viewModel.getSearchedTasks(it)
+                },
                 onSortClicked = {},
+                searchAppbarState = searchAppbarState,
                 onDelete = {})
         },
         content = {
             ListContent(
-                tasks = tasks,
+                allTasks = allTasks,
+                searchTasks = searchedTasks,
+                searchAppbarState = searchAppbarState,
                 navigationToTaskScreen = navigateToTaskScreen
             )
         },
@@ -94,7 +101,7 @@ fun DisplaySnackBar(
                 val snackBarResult = snackBarHostState.showSnackbar(
                     "${action.name} : $taskTitle",
                     actionLabel = setSBActionLabel(action),
-                    withDismissAction = true,
+                    withDismissAction = false,
                     duration = SnackbarDuration.Short
                 )
                 undoDeletedTask(action, snackBarResult) {
