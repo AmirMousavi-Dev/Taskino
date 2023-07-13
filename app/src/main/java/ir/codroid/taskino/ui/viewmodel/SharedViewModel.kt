@@ -23,9 +23,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
 
-    val searchAppbarState : MutableState<SearchAppbarState> = mutableStateOf(SearchAppbarState.CLOSED)
-    val searchAppbarTextState : MutableState<String> = mutableStateOf("")
-    private val _taskList = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.NotInitialize)
+    val searchAppbarState: MutableState<SearchAppbarState> =
+        mutableStateOf(SearchAppbarState.CLOSED)
+    val searchAppbarTextState: MutableState<String> = mutableStateOf("")
+    private val _taskList =
+        MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.NotInitialize)
     val taskList = _taskList.asStateFlow()
 
     val id: MutableState<Int> = mutableStateOf(0)
@@ -38,17 +40,16 @@ class SharedViewModel @Inject constructor(private val repository: TodoRepository
         MutableStateFlow<RequestState<ToDoTask?>>(RequestState.NotInitialize)
     val selectedTask = _selectedTask.asStateFlow()
 
-    fun getAllTask () {
+    fun getAllTask() {
         _taskList.value = RequestState.Loading
         try {
 
-        viewModelScope.launch {
-            repository.getAllTasks.collect{
-                delay(500)
-                _taskList.emit(RequestState.Success(it))
+            viewModelScope.launch {
+                repository.getAllTasks.collect {
+                    _taskList.emit(RequestState.Success(it))
+                }
             }
-        }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             _taskList.value = RequestState.Error(e)
         }
     }
@@ -80,18 +81,18 @@ class SharedViewModel @Inject constructor(private val repository: TodoRepository
         }
     }
 
-    fun updateTitle (newTitle :String) {
+    fun updateTitle(newTitle: String) {
         if (newTitle.length < MAX_TITLE_LENGTH)
             title.value = newTitle
     }
 
-    fun validateFields () =
+    fun validateFields() =
         title.value.isNotEmpty() && description.value.isNotEmpty()
 
-    private fun addTask () {
+    private fun addTask() {
         val toDoTask = ToDoTask(
-            title = title.value ,
-            description = description.value ,
+            title = title.value,
+            description = description.value,
             priority = priority.value
         )
         viewModelScope.launch(Dispatchers.IO) {
@@ -99,11 +100,12 @@ class SharedViewModel @Inject constructor(private val repository: TodoRepository
         }
     }
 
-    fun handleDatabaseAction (action: Action) {
+    fun handleDatabaseAction(action: Action) {
         when (action) {
             Action.ADD -> {
                 addTask()
             }
+
             Action.UPDATE -> {}
             Action.DELETE -> {}
             Action.DELETE_ALL -> {}

@@ -17,12 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.LoadingCircle
-import ir.codroid.taskino.ui.viewmodel.TaskScreenViewModel
+import ir.codroid.taskino.ui.viewmodel.SharedViewModel
 import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.RequestState
 
@@ -30,11 +29,11 @@ import ir.codroid.taskino.util.RequestState
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TaskScreen(
-    viewModel: TaskScreenViewModel = hiltViewModel(),
+    viewModel: SharedViewModel,
     taskId: Int,
     navigateToListScreen: (Action) -> Unit
 ) {
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = taskId) {
         viewModel.getSelectedTask(taskId)
     }
     val task by viewModel.selectedTask.collectAsState()
@@ -72,7 +71,7 @@ fun TaskScreen(
                     )
                 },
                 content = {
-                    LaunchedEffect(key1 = true) {
+                    LaunchedEffect(key1 = selectedTask) {
                         viewModel.updateTaskFiled(selectedTask)
                     }
                     TaskContent(
