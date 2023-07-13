@@ -130,7 +130,7 @@ class SharedViewModel @Inject constructor(private val repository: TodoRepository
             Action.UPDATE -> {updateTask()}
             Action.DELETE -> {deleteTask()}
             Action.DELETE_ALL -> {}
-            Action.UNDO -> {}
+            Action.UNDO -> {addTask()}
             else -> {}
         }
         this.action.value = Action.NO_ACTION

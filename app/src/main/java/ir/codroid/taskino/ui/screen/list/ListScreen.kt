@@ -7,10 +7,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,7 +39,10 @@ fun ListScreen(
     DisplaySnackBar(
         snackBarHostState = snackBarHostState,
         taskTitle = viewModel.title.value,
-        action = action
+        action = action,
+        onUndoClicked = {
+            viewModel.action.value = it
+        }
     ) {
         viewModel.handleDatabaseAction(action = action)
     }
@@ -80,6 +83,7 @@ fun DisplaySnackBar(
     snackBarHostState: SnackbarHostState,
     taskTitle: String,
     action: Action,
+    onUndoClicked: (Action) -> Unit,
     handleDatabaseAction: () -> Unit
 ) {
     handleDatabaseAction()
@@ -87,12 +91,27 @@ fun DisplaySnackBar(
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION)
             scope.launch {
-                snackBarHostState.showSnackbar(
+                val snackBarResult = snackBarHostState.showSnackbar(
                     "${action.name} : $taskTitle",
-                    actionLabel = "ok",
+                    actionLabel = setSBActionLabel(action),
                     withDismissAction = true,
                     duration = SnackbarDuration.Short
                 )
+                undoDeletedTask(action, snackBarResult) {
+                    onUndoClicked(it)
+                }
             }
+    }
+}
+
+private fun setSBActionLabel(action: Action) = if (action == Action.DELETE) "UNDO" else "OK"
+
+private fun undoDeletedTask(
+    action: Action,
+    snackBarResult: SnackbarResult,
+    onUndoClicked: (Action) -> Unit
+) {
+    if (snackBarResult == SnackbarResult.ActionPerformed && action == Action.DELETE) {
+        onUndoClicked(Action.UNDO)
     }
 }

@@ -62,17 +62,18 @@ fun TaskScreen(
                             if (action == Action.NO_ACTION)
                                 navigateToListScreen(action)
                             else
-                                if(viewModel.validateFields())
+                                if (viewModel.validateFields())
                                     navigateToListScreen(action)
-                            else
-                                displayToast(context = context)
+                                else
+                                    displayToast(context = context)
 
                         }
                     )
                 },
                 content = {
                     LaunchedEffect(key1 = selectedTask) {
-                        viewModel.updateTaskFiled(selectedTask)
+                        if (selectedTask != null || taskId == -1)
+                            viewModel.updateTaskFiled(selectedTask)
                     }
                     TaskContent(
                         title = title,
@@ -101,7 +102,7 @@ fun TaskScreen(
 
 private fun displayToast(context: Context) {
     Toast.makeText(
-        context, context.getText(R.string.fields_empty)
-        , Toast.LENGTH_SHORT).show()
+        context, context.getText(R.string.fields_empty), Toast.LENGTH_SHORT
+    ).show()
 
 }
