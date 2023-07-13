@@ -120,7 +120,7 @@ fun DisplaySnackBar(
 
 private fun setSBActionLabel(action: Action) = if (action == Action.DELETE) R.string.undo else R.string.ok
 private fun setSBMessage(action: Action , taskTitle: String , context: Context)
-= if (action == Action.DELETE_ALL) context.getString( R.string.delete_all_tasks) else "${action.title} : $taskTitle"
+= if (action == Action.DELETE_ALL) context.getString( R.string.delete_all_tasks) else context.getString(action.title) + " : $taskTitle"
 
 private fun undoDeletedTask(
     action: Action,
