@@ -83,6 +83,10 @@ dependencies {
     // compose navigation
     implementation "androidx.navigation:navigation-compose:$compose_navigation_version"
 
+    // accompanist navigation animation
+    implementation "com.google.accompanist:accompanist-navigation-animation:$navigation_animation_version"
+
+
     // animation
     implementation "com.airbnb.android:lottie-compose:$lottie_version"
 

@@ -7,6 +7,7 @@ buildscript {
         hilt_navigationcompose_version = '1.0.0'
         compose_navigation_version = '2.5.3'
         lottie_version = '5.2.0'
+        navigation_animation_version = '0.31.5-beta'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
