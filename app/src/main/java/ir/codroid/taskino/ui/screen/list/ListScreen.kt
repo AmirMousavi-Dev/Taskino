@@ -83,6 +83,7 @@ fun ListScreen(
                 onSwipeToDelete = { action, toDoTask ->
                     viewModel.updateTaskFiled(selectedTask = toDoTask)
                     viewModel.action.value = action
+                    snackBarHostState.currentSnackbarData?.dismiss()
                 },
                 navigationToTaskScreen = navigateToTaskScreen
             )
