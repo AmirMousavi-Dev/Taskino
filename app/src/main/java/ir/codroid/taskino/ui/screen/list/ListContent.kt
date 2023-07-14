@@ -2,8 +2,17 @@
 
 package ir.codroid.taskino.ui.screen.list
 
+import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,7 +38,12 @@ import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -55,6 +69,8 @@ import ir.codroid.taskino.ui.theme.listItemTextColor
 import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.RequestState
 import ir.codroid.taskino.util.SearchAppbarState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun ListContent(
@@ -123,6 +139,7 @@ fun HandleListContent(
         )
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun DisplayTasks(
     tasks: List<ToDoTask>,
@@ -145,22 +162,46 @@ fun DisplayTasks(
             val dismissState = rememberDismissState()
             val dismissDirection = dismissState.dismissDirection
             val isDismiss = dismissState.isDismissed(DismissDirection.EndToStart)
-            if (isDismiss && dismissDirection == DismissDirection.EndToStart)
+            var itemAppeared by remember { mutableStateOf(false) }
+            if (isDismiss && dismissDirection == DismissDirection.EndToStart){
+                val scope = rememberCoroutineScope()
+                scope.launch {
+                    delay(300)
                 onSwipeToDelete(Action.DELETE, task)
+                }
+            }
             val degrees by animateFloatAsState(
                 if (dismissState.targetValue == DismissValue.Default) 0f
                 else -45f
             )
+            LaunchedEffect(key1 = true){
+                itemAppeared = true
+            }
 
-            SwipeToDismiss(
-                state = dismissState,
-                directions = setOf(DismissDirection.EndToStart),
-
-                background = { RedBackground(degrees = degrees) },
-                dismissContent = {
-                    ListItem(toDoTask = task, navigationToTaskScreen = navigationToTaskScreen)
-
-                })
+            AnimatedVisibility(
+                visible = itemAppeared && !isDismiss,
+                enter = expandVertically(
+                    animationSpec = tween(
+                        durationMillis =
+                        500
+                    )
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                )
+            ) {
+                SwipeToDismiss(
+                    state = dismissState,
+                    directions = setOf(DismissDirection.EndToStart),
+                    background = {
+                        RedBackground(degrees = degrees) },
+                    dismissContent = {
+                        ListItem(toDoTask = task, navigationToTaskScreen = navigationToTaskScreen)
+                    }
+                )
+            }
 
         }
     }
