@@ -43,7 +43,6 @@ import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor
 import ir.codroid.taskino.ui.viewmodel.SharedViewModel
 import ir.codroid.taskino.util.SearchAppbarState
-import ir.codroid.taskino.util.TrailingIconState
 
 @Composable
 fun ListAppbar(
@@ -213,10 +212,6 @@ fun SearchAppbar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
 ) {
-    var trailingIconState by remember {
-        mutableStateOf(TrailingIconState.READY_TO_DELETE)
-    }
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -257,21 +252,10 @@ fun SearchAppbar(
             },
             trailingIcon = {
                 IconButton(onClick = {
-                    when (trailingIconState) {
-                        TrailingIconState.READY_TO_CLOSE -> {
-                            if (text.isNotEmpty())
-                                onTextChanged("")
-                            else {
-                                onCloseClicked()
-                                trailingIconState = TrailingIconState.READY_TO_DELETE
-                            }
-                        }
-
-                        TrailingIconState.READY_TO_DELETE -> {
-                            onTextChanged("")
-                            trailingIconState = TrailingIconState.READY_TO_CLOSE
-                        }
-                    }
+                    if (text.isNotEmpty())
+                        onTextChanged("")
+                    else
+                        onCloseClicked()
                 }) {
                     Icon(
                         imageVector = Icons.Filled.Close,
