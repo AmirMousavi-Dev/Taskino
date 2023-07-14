@@ -106,11 +106,6 @@ fun PriorityDropDownMenu(
                 onClick = {
                     onPriorityClicked(Priority.HIGH)
                     expanded = false})
-            DropdownMenuItem(
-                text = { PriorityItem(priority = Priority.NONE) },
-                onClick = {
-                    onPriorityClicked(Priority.NONE)
-                    expanded = false})
         }
     }
 

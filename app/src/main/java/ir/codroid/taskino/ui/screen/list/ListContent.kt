@@ -42,58 +42,46 @@ import ir.codroid.taskino.util.SearchAppbarState
 fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
     searchTasks: RequestState<List<ToDoTask>>,
+    lowPriorityTasks: List<ToDoTask>,
+    highPriorityTasks: List<ToDoTask>,
     searchAppbarState: SearchAppbarState,
+    sortState: RequestState<Priority>,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
 
-    if (searchAppbarState == SearchAppbarState.TRIGGERED)
-        when (searchTasks) {
-            is RequestState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    LoadingCircle(isSystemDark = isSystemInDarkTheme())
-                }
+    if (sortState is RequestState.Success) {
+        when {
+            searchAppbarState == SearchAppbarState.TRIGGERED -> {
+                if (searchTasks is RequestState.Success)
+                    HandleListContent(
+                        tasks = searchTasks.data,
+                        navigationToTaskScreen = navigationToTaskScreen
+                    )
             }
 
-            is RequestState.Success -> {
+            sortState.data == Priority.NONE -> {
+                if (allTasks is RequestState.Success)
+                    HandleListContent(
+                        tasks = allTasks.data,
+                        navigationToTaskScreen = navigationToTaskScreen
+                    )
+            }
+
+            sortState.data == Priority.LOW -> {
                 HandleListContent(
-                    tasks = searchTasks.data,
+                    tasks = lowPriorityTasks,
                     navigationToTaskScreen = navigationToTaskScreen
                 )
             }
 
-            is RequestState.NotInitialize -> {
-                Log.e("List_Screen", "data is not initialize")
-            }
-
-            is RequestState.Error -> {
-                Log.e("List_Screen", searchTasks.error.message ?: "task screen error")
-            }
-        }
-    else
-        when (allTasks) {
-            is RequestState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    LoadingCircle(isSystemDark = isSystemInDarkTheme())
-                }
-            }
-
-            is RequestState.Success -> {
+            sortState.data == Priority.HIGH -> {
                 HandleListContent(
-                    tasks = allTasks.data,
+                    tasks = highPriorityTasks,
                     navigationToTaskScreen = navigationToTaskScreen
                 )
             }
-
-            is RequestState.NotInitialize -> {
-                Log.e("List_Screen", "data is not initialize")
-            }
-
-            is RequestState.Error -> {
-                Log.e("List_Screen", allTasks.error.message ?: "task screen error")
-            }
         }
-
-
+    }
 }
 
 @Composable

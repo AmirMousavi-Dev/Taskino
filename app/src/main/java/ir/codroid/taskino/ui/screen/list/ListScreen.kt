@@ -34,13 +34,18 @@ fun ListScreen(
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getAllTasks()
+        viewModel.readSortSate()
     }
     val context = LocalContext.current
     val allTasks by viewModel.allTasks.collectAsState()
     val searchedTasks by viewModel.searchedTasks.collectAsState()
+    val sortState by viewModel.sortState.collectAsState()
+    val lowPriorityTasks by viewModel.lowPriorityTasks.collectAsState()
+    val highPriorityTasks by viewModel.highPriorityTasks.collectAsState()
     val action by viewModel.action
     val snackBarHostState = remember { SnackbarHostState() }
     val searchAppbarState = viewModel.searchAppbarState.value
+
     DisplaySnackBar(
         snackBarHostState = snackBarHostState,
         taskTitle = viewModel.title.value,
@@ -60,7 +65,9 @@ fun ListScreen(
                 onSearchClicked = {
                     viewModel.getSearchedTasks(it)
                 },
-                onSortClicked = {},
+                onSortClicked = { priority ->
+                    viewModel.persistSortState(priority = priority)
+                },
                 searchAppbarState = searchAppbarState,
                 onDelete = {
                     viewModel.action.value = Action.DELETE_ALL
@@ -70,6 +77,9 @@ fun ListScreen(
             ListContent(
                 allTasks = allTasks,
                 searchTasks = searchedTasks,
+                lowPriorityTasks = lowPriorityTasks,
+                highPriorityTasks = highPriorityTasks,
+                sortState = sortState,
                 searchAppbarState = searchAppbarState,
                 navigationToTaskScreen = navigateToTaskScreen
             )

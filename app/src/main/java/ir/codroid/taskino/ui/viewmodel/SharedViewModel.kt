@@ -15,7 +15,12 @@ import ir.codroid.taskino.util.RequestState
 import ir.codroid.taskino.util.SearchAppbarState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +28,7 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
     private val repository: TodoRepository,
     private val dataStoreRepository: DataStoreRepository
-    ) : ViewModel() {
+) : ViewModel() {
 
     val searchAppbarState: MutableState<SearchAppbarState> =
         mutableStateOf(SearchAppbarState.CLOSED)
@@ -37,6 +42,28 @@ class SharedViewModel @Inject constructor(
     private val _searchedTasks =
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.NotInitialize)
     val searchedTasks = _searchedTasks.asStateFlow()
+
+
+    private val _selectedTask =
+        MutableStateFlow<RequestState<ToDoTask?>>(RequestState.NotInitialize)
+    val selectedTask = _selectedTask.asStateFlow()
+
+    private val _sortState = MutableStateFlow<RequestState<Priority>>(RequestState.NotInitialize)
+    val sortState = _sortState.asStateFlow()
+
+    val lowPriorityTasks : StateFlow<List<ToDoTask>> = repository
+        .sortByLowPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList()
+        )
+
+    val highPriorityTasks: StateFlow<List<ToDoTask>> = repository
+        .sortByHighPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList()
+        )
     // endregion get Task from Database
 
     val id: MutableState<Int> = mutableStateOf(0)
@@ -45,9 +72,6 @@ class SharedViewModel @Inject constructor(
     val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
 
-    private val _selectedTask =
-        MutableStateFlow<RequestState<ToDoTask?>>(RequestState.NotInitialize)
-    val selectedTask = _selectedTask.asStateFlow()
 
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
@@ -90,6 +114,25 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    fun persistSortState(priority: Priority) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.persistSortState(priority = priority)
+        }
+    }
+
+    fun readSortSate() {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.readSortState
+                .map { priorityName ->
+                    Priority.valueOf(priorityName)
+                }
+                .collect { priority ->
+                    _sortState.emit(RequestState.Success(priority))
+                }
+        }
+    }
+
+    // region update filed
     fun updateTaskFiled(selectedTask: ToDoTask?) {
         if (selectedTask != null) {
             id.value = selectedTask.id
@@ -112,6 +155,9 @@ class SharedViewModel @Inject constructor(
     fun validateFields() =
         title.value.isNotEmpty() && description.value.isNotEmpty()
 
+    // endregion update filed
+
+    // region database action
     private fun addTask() {
         val toDoTask = ToDoTask(
             title = title.value,
@@ -171,6 +217,7 @@ class SharedViewModel @Inject constructor(
             Action.DELETE_ALL -> {
                 deleteAllTasks()
             }
+
             Action.UNDO -> {
                 addTask()
             }
@@ -179,4 +226,7 @@ class SharedViewModel @Inject constructor(
         }
         this.action.value = Action.NO_ACTION
     }
+
+    // endregion database action
+
 }
