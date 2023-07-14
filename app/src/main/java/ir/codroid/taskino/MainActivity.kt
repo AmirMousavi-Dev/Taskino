@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.codroid.taskino.navigation.SetupNavigation
+import ir.codroid.taskino.ui.component.ChangeSystemUi
 import ir.codroid.taskino.ui.theme.TaskinoTheme
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskinoTheme {
                 navController = rememberAnimatedNavController()
+                ChangeSystemUi(navController = navController)
 
                 SetupNavigation(navController = navController)
             }
