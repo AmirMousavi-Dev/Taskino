@@ -33,10 +33,6 @@ fun ListScreen(
     viewModel: SharedViewModel,
     navigateToTaskScreen: (Int) -> Unit
 ) {
-    LaunchedEffect(key1 = true) {
-        viewModel.getAllTasks()
-        viewModel.readSortSate()
-    }
     LaunchedEffect(key1 = action){
         viewModel.handleDatabaseAction(action = action)
     }

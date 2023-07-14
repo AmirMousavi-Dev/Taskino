@@ -1,5 +1,6 @@
 package ir.codroid.taskino.ui.viewmodel
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -73,7 +74,12 @@ class SharedViewModel @Inject constructor(
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
 
 
-    fun getAllTasks() {
+    init {
+            getAllTasks()
+            readSortSate()
+
+    }
+    private fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
 
@@ -120,7 +126,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun readSortSate() {
+    private fun readSortSate() {
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.readSortState
                 .map { priorityName ->

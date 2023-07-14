@@ -5,7 +5,6 @@ buildscript {
         datastore_version = '1.0.0'
         hilt_version = '2.44'
         hilt_navigationcompose_version = '1.0.0'
-        compose_navigation_version = '2.5.3'
         lottie_version = '5.2.0'
         navigation_animation_version = '0.31.5-beta'
     }

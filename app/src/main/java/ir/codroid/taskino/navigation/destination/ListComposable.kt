@@ -1,14 +1,21 @@
 package ir.codroid.taskino.navigation.destination
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.navArgument
 import ir.codroid.taskino.ui.screen.list.ListScreen
 import ir.codroid.taskino.ui.viewmodel.SharedViewModel
+import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.Constants.LIST_ARGUMENT_KEY
 import ir.codroid.taskino.util.Constants.LIST_SCREEN
 import ir.codroid.taskino.util.toAction
@@ -20,18 +27,39 @@ fun NavGraphBuilder.listComposable(
 ) {
     composable(
         route = LIST_SCREEN,
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(
+                    durationMillis = 700
+                )
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(
+                    durationMillis = 700
+                )
+            )
+        },
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
     ) { navBackStackEntry ->
         val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
-        LaunchedEffect(key1 = action){
-            viewModel.action.value = action
+        var myAction by rememberSaveable() { mutableStateOf(Action.NO_ACTION) }
+        LaunchedEffect(key1 = myAction) {
+            if (myAction != action) {
+                myAction = action
+                viewModel.action.value = action
+            }
         }
         val dataBaseAction by viewModel.action
         ListScreen(
             action = dataBaseAction,
             viewModel = viewModel,
-            navigateToTaskScreen = navigateToTaskScreen)
+            navigateToTaskScreen = navigateToTaskScreen
+        )
     }
 }

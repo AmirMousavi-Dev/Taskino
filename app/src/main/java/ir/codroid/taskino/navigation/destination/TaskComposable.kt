@@ -25,7 +25,7 @@ fun NavGraphBuilder.taskComposable(
             slideInHorizontally(
                 initialOffsetX = { fullWidth -> -fullWidth },
                 animationSpec = tween(
-                    durationMillis = 300
+                    durationMillis = 700
                 )
             )
         },
@@ -33,7 +33,7 @@ fun NavGraphBuilder.taskComposable(
             slideOutHorizontally(
                 targetOffsetX = { fullWidth -> -fullWidth },
                 animationSpec = tween(
-                    durationMillis = 300
+                    durationMillis = 700
                 )
             )
         },
