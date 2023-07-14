@@ -1,4 +1,4 @@
-package ir.codroid.taskino.repository
+package ir.codroid.taskino.data.repository
 
 import dagger.hilt.android.scopes.ViewModelScoped
 import ir.codroid.taskino.data.ToDoDao

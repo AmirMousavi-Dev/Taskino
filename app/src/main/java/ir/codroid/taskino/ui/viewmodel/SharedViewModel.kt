@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.ToDoTask
-import ir.codroid.taskino.repository.TodoRepository
+import ir.codroid.taskino.data.repository.DataStoreRepository
+import ir.codroid.taskino.data.repository.TodoRepository
 import ir.codroid.taskino.ui.theme.MAX_TITLE_LENGTH
 import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.RequestState
@@ -19,7 +20,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
+class SharedViewModel @Inject constructor(
+    private val repository: TodoRepository,
+    private val dataStoreRepository: DataStoreRepository
+    ) : ViewModel() {
 
     val searchAppbarState: MutableState<SearchAppbarState> =
         mutableStateOf(SearchAppbarState.CLOSED)
