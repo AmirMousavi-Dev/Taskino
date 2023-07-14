@@ -49,9 +49,9 @@ fun TaskScreen(
     }
 
     val task by viewModel.selectedTask.collectAsState()
-    val title: String by viewModel.title
-    val description: String by viewModel.description
-    val priority: Priority by viewModel.priority
+    val title = viewModel.title
+    val description = viewModel.description
+    val priority = viewModel.priority
     val context = LocalContext.current
 
     when (task) {
@@ -94,11 +94,11 @@ fun TaskScreen(
                         },
                         description = description,
                         onDescriptionChanged = { description ->
-                            viewModel.description.value = description
+                            viewModel.updateDescription(description)
                         },
                         priority = priority,
                         onPrioritySelected = { priority ->
-                            viewModel.priority.value = priority
+                            viewModel.updatePriority(priority)
                         }
                     )
                 }

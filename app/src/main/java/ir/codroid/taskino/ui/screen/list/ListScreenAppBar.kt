@@ -52,12 +52,12 @@ fun ListAppbar(
     searchAppbarState: SearchAppbarState,
     onDelete: () -> Unit
 ) {
-    val searchAppbarTextState = viewModel.searchAppbarTextState
+    viewModel.searchAppbarTextState
     when (searchAppbarState) {
         SearchAppbarState.CLOSED -> {
             DefaultListAppbar(
                 onSearchClicked = {
-                    viewModel.searchAppbarState.value = SearchAppbarState.OPENED
+                    viewModel.updateSearchAppbarState(SearchAppbarState.OPENED)
                 },
                 onSortClicked = onSortClicked,
                 onDeleteAllConfirm = onDelete
@@ -66,12 +66,12 @@ fun ListAppbar(
 
         else -> {
             SearchAppbar(
-                text = searchAppbarTextState.value,
+                text = viewModel.searchAppbarTextState,
                 onTextChanged = { newText ->
-                    searchAppbarTextState.value = newText
+                    viewModel.updateSearchAppbarTextState(newText)
                 },
                 onCloseClicked = {
-                    viewModel.searchAppbarState.value = SearchAppbarState.CLOSED
+                    viewModel.updateSearchAppbarState(SearchAppbarState.CLOSED)
                 },
                 onSearchClicked = {
                     onSearchClicked(it)

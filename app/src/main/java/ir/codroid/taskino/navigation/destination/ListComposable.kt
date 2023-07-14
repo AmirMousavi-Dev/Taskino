@@ -52,10 +52,10 @@ fun NavGraphBuilder.listComposable(
         LaunchedEffect(key1 = myAction) {
             if (myAction != action) {
                 myAction = action
-                viewModel.action.value = action
+                viewModel.updateAction(action)
             }
         }
-        val dataBaseAction by viewModel.action
+        val dataBaseAction = viewModel.action
         ListScreen(
             action = dataBaseAction,
             viewModel = viewModel,

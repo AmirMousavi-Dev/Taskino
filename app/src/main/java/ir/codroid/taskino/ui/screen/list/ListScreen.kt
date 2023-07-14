@@ -43,18 +43,18 @@ fun ListScreen(
     val lowPriorityTasks by viewModel.lowPriorityTasks.collectAsState()
     val highPriorityTasks by viewModel.highPriorityTasks.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
-    val searchAppbarState = viewModel.searchAppbarState.value
+    val searchAppbarState = viewModel.searchAppbarState
 
     DisplaySnackBar(
         snackBarHostState = snackBarHostState,
-        taskTitle = viewModel.title.value,
+        taskTitle = viewModel.title,
         action = action,
         context = context,
-        onUndoClicked = {
-            viewModel.action.value = it
+        onUndoClicked = {newAction ->
+            viewModel.updateAction(newAction)
         }
-    ) {action ->
-        viewModel.action.value = action
+    ) {newAction ->
+        viewModel.updateAction(newAction)
     }
 
     Scaffold(
@@ -69,7 +69,7 @@ fun ListScreen(
                 },
                 searchAppbarState = searchAppbarState,
                 onDelete = {
-                    viewModel.action.value = Action.DELETE_ALL
+                    viewModel.updateAction(Action.DELETE_ALL)
                 })
         },
         content = {
@@ -80,9 +80,9 @@ fun ListScreen(
                 highPriorityTasks = highPriorityTasks,
                 sortState = sortState,
                 searchAppbarState = searchAppbarState,
-                onSwipeToDelete = { action, toDoTask ->
+                onSwipeToDelete = { newAction, toDoTask ->
                     viewModel.updateTaskFiled(selectedTask = toDoTask)
-                    viewModel.action.value = action
+                    viewModel.updateAction(newAction)
                     snackBarHostState.currentSnackbarData?.dismiss()
                 },
                 navigationToTaskScreen = navigateToTaskScreen
