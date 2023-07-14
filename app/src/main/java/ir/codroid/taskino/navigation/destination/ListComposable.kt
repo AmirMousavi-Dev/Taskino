@@ -2,6 +2,7 @@ package ir.codroid.taskino.navigation.destination
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import com.google.accompanist.navigation.animation.composable
@@ -27,7 +28,9 @@ fun NavGraphBuilder.listComposable(
         LaunchedEffect(key1 = action){
             viewModel.action.value = action
         }
+        val dataBaseAction by viewModel.action
         ListScreen(
+            action = dataBaseAction,
             viewModel = viewModel,
             navigateToTaskScreen = navigateToTaskScreen)
     }

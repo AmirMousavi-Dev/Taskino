@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListScreen(
+    action: Action,
     viewModel: SharedViewModel,
     navigateToTaskScreen: (Int) -> Unit
 ) {
@@ -36,13 +37,15 @@ fun ListScreen(
         viewModel.getAllTasks()
         viewModel.readSortSate()
     }
+    LaunchedEffect(key1 = action){
+        viewModel.handleDatabaseAction(action = action)
+    }
     val context = LocalContext.current
     val allTasks by viewModel.allTasks.collectAsState()
     val searchedTasks by viewModel.searchedTasks.collectAsState()
     val sortState by viewModel.sortState.collectAsState()
     val lowPriorityTasks by viewModel.lowPriorityTasks.collectAsState()
     val highPriorityTasks by viewModel.highPriorityTasks.collectAsState()
-    val action by viewModel.action
     val snackBarHostState = remember { SnackbarHostState() }
     val searchAppbarState = viewModel.searchAppbarState.value
 
@@ -54,8 +57,8 @@ fun ListScreen(
         onUndoClicked = {
             viewModel.action.value = it
         }
-    ) {
-        viewModel.handleDatabaseAction(action = action)
+    ) {action ->
+        viewModel.action.value = action
     }
 
     Scaffold(
@@ -81,7 +84,7 @@ fun ListScreen(
                 highPriorityTasks = highPriorityTasks,
                 sortState = sortState,
                 searchAppbarState = searchAppbarState,
-                onSwipeToDelete = {action, toDoTask ->
+                onSwipeToDelete = { action, toDoTask ->
                     viewModel.updateTaskFiled(selectedTask = toDoTask)
                     viewModel.action.value = action
                 },
@@ -112,15 +115,14 @@ fun DisplaySnackBar(
     action: Action,
     context: Context,
     onUndoClicked: (Action) -> Unit,
-    handleDatabaseAction: () -> Unit
+    onCompleted: (Action) -> Unit
 ) {
-    handleDatabaseAction()
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
-        if (action != Action.NO_ACTION)
+        if (action != Action.NO_ACTION) {
             scope.launch {
                 val snackBarResult = snackBarHostState.showSnackbar(
-                    setSBMessage(action , taskTitle , context),
+                    setSBMessage(action, taskTitle, context),
                     actionLabel = context.getString(setSBActionLabel(action)),
                     withDismissAction = false,
                     duration = SnackbarDuration.Short
@@ -129,12 +131,18 @@ fun DisplaySnackBar(
                     onUndoClicked(it)
                 }
             }
+            onCompleted(Action.NO_ACTION)
+        }
     }
 }
 
-private fun setSBActionLabel(action: Action) = if (action == Action.DELETE) R.string.undo else R.string.ok
-private fun setSBMessage(action: Action , taskTitle: String , context: Context)
-= if (action == Action.DELETE_ALL) context.getString( R.string.delete_all_tasks) else context.getString(action.title) + " : $taskTitle"
+private fun setSBActionLabel(action: Action) =
+    if (action == Action.DELETE) R.string.undo else R.string.ok
+
+private fun setSBMessage(action: Action, taskTitle: String, context: Context) =
+    if (action == Action.DELETE_ALL) context.getString(R.string.delete_all_tasks) else context.getString(
+        action.title
+    ) + " : $taskTitle"
 
 private fun undoDeletedTask(
     action: Action,

@@ -224,7 +224,6 @@ class SharedViewModel @Inject constructor(
 
             else -> {}
         }
-        this.action.value = Action.NO_ACTION
     }
 
     // endregion database action
