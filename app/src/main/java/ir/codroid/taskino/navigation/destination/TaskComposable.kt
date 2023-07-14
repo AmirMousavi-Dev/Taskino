@@ -29,14 +29,6 @@ fun NavGraphBuilder.taskComposable(
                 )
             )
         },
-        exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> -fullWidth },
-                animationSpec = tween(
-                    durationMillis = 700
-                )
-            )
-        },
         arguments = listOf(navArgument(TASK_ARGUMENT_KEY) {
             type = NavType.IntType
         })

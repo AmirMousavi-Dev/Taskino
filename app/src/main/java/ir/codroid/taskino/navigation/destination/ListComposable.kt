@@ -27,22 +27,6 @@ fun NavGraphBuilder.listComposable(
 ) {
     composable(
         route = LIST_SCREEN,
-        enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(
-                    durationMillis = 700
-                )
-            )
-        },
-        exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(
-                    durationMillis = 700
-                )
-            )
-        },
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })

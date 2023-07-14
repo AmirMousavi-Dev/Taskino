@@ -15,14 +15,6 @@ fun NavGraphBuilder.splashComposable(
 ) {
     composable(
         route = SPLASH_SCREEN,
-        enterTransition = {
-            slideInVertically(
-                initialOffsetY = {fullHeight -> fullHeight },
-                animationSpec = tween(
-                    durationMillis = 300
-                )
-            )
-        },
         exitTransition = {
             slideOutVertically(
                 targetOffsetY = {fullHeight -> -fullHeight },
