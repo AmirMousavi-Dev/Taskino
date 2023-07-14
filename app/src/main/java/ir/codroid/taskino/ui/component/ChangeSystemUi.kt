@@ -3,7 +3,6 @@ package ir.codroid.taskino.ui.component
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -23,6 +22,8 @@ fun ChangeSystemUi(navController: NavHostController) {
             systemUiController.setStatusBarColor(MaterialTheme.colorScheme.topAppbarColor)
         }
     }
-    systemUiController.isNavigationBarVisible = false
-    systemUiController.isSystemBarsVisible = false
+    systemUiController.apply {
+        isNavigationBarVisible = false
+        isSystemBarsVisible = false
+    }
 }
