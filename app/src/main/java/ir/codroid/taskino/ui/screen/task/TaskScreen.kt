@@ -5,15 +5,21 @@ package ir.codroid.taskino.ui.screen.task
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +42,7 @@ fun TaskScreen(
     LaunchedEffect(key1 = taskId) {
         viewModel.getSelectedTask(taskId)
     }
+    BackHandler(onBackPressed = {navigateToListScreen(Action.NO_ACTION)})
     val task by viewModel.selectedTask.collectAsState()
     val title: String by viewModel.title
     val description: String by viewModel.description
@@ -105,4 +112,29 @@ private fun displayToast(context: Context) {
         context, context.getText(R.string.fields_empty), Toast.LENGTH_SHORT
     ).show()
 
+}
+
+@Composable
+fun BackHandler(
+    backDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val callBack = remember {
+        object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+
+        }
+    }
+    
+    DisposableEffect(key1 = backDispatcher){
+        backDispatcher?.addCallback(callBack)
+        onDispose{
+            callBack.remove()
+        }
+    }
 }
