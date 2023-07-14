@@ -33,7 +33,6 @@ val ColorScheme.topAppbarContentColor: Color
     get() = if (isSystemInDarkTheme()) LightGray else Color.White
 // endregion Top Appbar Color
 
-
 // region List Item  Color
 val ColorScheme.listItemBackgroundColor: Color
     @Composable
@@ -42,4 +41,8 @@ val ColorScheme.listItemTextColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) LightGray else DarkGray
 // endregion List Item Background Color
+
+val ColorScheme.splashBGColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) DarkGray else Color.White
 
