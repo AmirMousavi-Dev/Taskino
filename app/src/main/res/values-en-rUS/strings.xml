@@ -31,4 +31,6 @@
     <string name="ad_delete_message">Are you want to delete \'%1$s\' ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ad_delete_tasks_title">Delete all tasks?</string>
+    <string name="ad_delete_tasks_message">Are you sure you want delete all tasks ? there is no going back after this action.</string>
 </resources>

@@ -30,4 +30,6 @@
     <string name="ad_delete_message">ایا میخواهید \'%1$s\' را حذف کنید ؟</string>
     <string name="yes">تائید</string>
     <string name="no">خیر</string>
+    <string name="ad_delete_tasks_title">حدف همه‌ی فعالیت ها ؟</string>
+    <string name="ad_delete_tasks_message">ایا میخواهید همه‌ی فعالیت ها را حذف کنید ؟ هیچ راه برگشتی بعد از این کار وجود ندارد.</string>
 </resources>

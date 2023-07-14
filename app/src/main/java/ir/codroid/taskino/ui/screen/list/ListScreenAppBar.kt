@@ -1,6 +1,5 @@
 package ir.codroid.taskino.ui.screen.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.ui.component.DisplayAlertDialog
 import ir.codroid.taskino.ui.component.PriorityItem
 import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
@@ -42,7 +42,6 @@ import ir.codroid.taskino.ui.theme.TOP_APP_BAR_HEIGHT
 import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor
 import ir.codroid.taskino.ui.viewmodel.SharedViewModel
-import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.SearchAppbarState
 import ir.codroid.taskino.util.TrailingIconState
 
@@ -62,7 +61,7 @@ fun ListAppbar(
                     viewModel.searchAppbarState.value = SearchAppbarState.OPENED
                 },
                 onSortClicked = onSortClicked,
-                onDelete = onDelete
+                onDeleteAllConfirm = onDelete
             )
         }
 
@@ -89,14 +88,15 @@ fun ListAppbar(
 fun DefaultListAppbar(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
-    onDelete: () -> Unit
+    onDeleteAllConfirm: () -> Unit
 ) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.tasks)) },
         actions = {
-            SearchAction(onSearchClicked = onSearchClicked)
-            SortAction(onSortClicked = onSortClicked)
-            MoreAction(onDelete = onDelete)
+            ListAppbarAction(
+                onSearchClicked =  onSearchClicked ,
+                onSortClicked = onSortClicked,
+                onDeleteAllConfirm = onDeleteAllConfirm)
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppbarColor,
@@ -104,6 +104,27 @@ fun DefaultListAppbar(
             actionIconContentColor = MaterialTheme.colorScheme.topAppbarContentColor,
         ),
     )
+}
+
+@Composable
+fun ListAppbarAction(
+    onSearchClicked: () -> Unit,
+    onSortClicked: (Priority) -> Unit,
+    onDeleteAllConfirm: () -> Unit
+) {
+    val openDialog = remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.ad_delete_tasks_title),
+        message = stringResource(id = R.string.ad_delete_tasks_message),
+        openDialog = openDialog.value,
+        onDismiss = { openDialog.value = false }) {
+        onDeleteAllConfirm()
+    }
+    SearchAction(onSearchClicked = onSearchClicked)
+    SortAction(onSortClicked = onSortClicked)
+
+    MoreAction(onDelete = {openDialog.value = true})
 }
 
 @Composable
@@ -262,7 +283,8 @@ fun SearchAppbar(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
-                    onSearchClicked(text) }
+                    onSearchClicked(text)
+                }
             ))
     }
 }
