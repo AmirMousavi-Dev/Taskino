@@ -32,4 +32,10 @@
     <string name="no">خیر</string>
     <string name="ad_delete_tasks_title">حدف همه‌ی فعالیت ها ؟</string>
     <string name="ad_delete_tasks_message">ایا میخواهید همه‌ی فعالیت ها را حذف کنید ؟ هیچ راه برگشتی بعد از این کار وجود ندارد.</string>
+    <string name="about_us">درباره ما</string>
+    <string name="our_application">برنامه‌های ما</string>
+    <string name="rate_us">امتیاز به ما</string>
+    <string name="language">انتخاب زبان</string>
+    <string name="persian">فارسی</string>
+    <string name="english">انگلیسی</string>
 </resources>

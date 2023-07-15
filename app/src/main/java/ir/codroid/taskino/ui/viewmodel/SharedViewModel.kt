@@ -14,6 +14,7 @@ import ir.codroid.taskino.data.repository.DataStoreRepository
 import ir.codroid.taskino.data.repository.TodoRepository
 import ir.codroid.taskino.ui.theme.MAX_TITLE_LENGTH
 import ir.codroid.taskino.util.Action
+import ir.codroid.taskino.util.Language
 import ir.codroid.taskino.util.RequestState
 import ir.codroid.taskino.util.SearchAppbarState
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,7 +57,8 @@ class SharedViewModel @Inject constructor(
     private val _sortState = MutableStateFlow<RequestState<Priority>>(RequestState.NotInitialize)
     val sortState = _sortState.asStateFlow()
 
-    val lowPriorityTasks : StateFlow<List<ToDoTask>> = repository
+
+    val lowPriorityTasks: StateFlow<List<ToDoTask>> = repository
         .sortByLowPriority.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -81,13 +84,15 @@ class SharedViewModel @Inject constructor(
         private set
     var action by mutableStateOf(Action.NO_ACTION)
         private set
-
+    var userLanguage by mutableStateOf(Language.ENGLISH)
+        private set
 
     init {
-            getAllTasks()
-            readSortSate()
+        getAllTasks()
+        readSortSate()
 
     }
+
     private fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
@@ -146,6 +151,16 @@ class SharedViewModel @Inject constructor(
                 }
         }
     }
+
+    fun saveUserLanguage(language: Language) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveUserLanguage(language = language)
+        }
+    }
+
+     fun readUserLanguage() :Language =
+        dataStoreRepository.readUserLanguage()
+
 
     // region update filed
     fun updateTaskFiled(selectedTask: ToDoTask?) {
@@ -244,7 +259,7 @@ class SharedViewModel @Inject constructor(
     // endregion database action
 
     // region setter
-    fun updateDescription(newDescription :String) {
+    fun updateDescription(newDescription: String) {
         description = newDescription
     }
 
@@ -260,8 +275,13 @@ class SharedViewModel @Inject constructor(
         searchAppbarState = newAppbarState
     }
 
-    fun updateSearchAppbarTextState(newSearchAppbarState :String) {
+    fun updateSearchAppbarTextState(newSearchAppbarState: String) {
         searchAppbarTextState = newSearchAppbarState
     }
+
+    fun updateUserLanguage(newLanguage: Language) {
+        userLanguage = newLanguage
+    }
+    // endregion setter
 
 }

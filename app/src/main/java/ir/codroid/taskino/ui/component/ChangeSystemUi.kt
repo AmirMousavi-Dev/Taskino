@@ -18,12 +18,12 @@ fun ChangeSystemUi(navController: NavHostController) {
         SPLASH_SCREEN -> {
             systemUiController.setStatusBarColor(MaterialTheme.colorScheme.splashBGColor)
         }
+
         else -> {
             systemUiController.setStatusBarColor(MaterialTheme.colorScheme.topAppbarColor)
         }
     }
     systemUiController.apply {
         isNavigationBarVisible = false
-        isSystemBarsVisible = false
     }
 }
