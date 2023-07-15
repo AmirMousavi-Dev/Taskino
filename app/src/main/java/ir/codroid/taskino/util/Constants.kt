@@ -15,7 +15,7 @@ object Constants {
 
     const val APPLICATION_PACKAGE_NAME = "ir.codroid.taskino"
     const val CAFE_BAZAR_PACKAGE_NAME = "com.farsitel.bazaar"
-    const val CAFE_BAZAR_DEVELOPER_ID = "codroid"
+    const val CAFE_BAZAR_DEVELOPER_ID = "reversedev"
 
 
     const val PREFERENCE_NAME ="todo_preferences"
