@@ -42,6 +42,7 @@ fun TaskScreen(
 ) {
     LaunchedEffect(key1 = taskId) {
         viewModel.getSelectedTask(taskId)
+
     }
 
     BackHandler() {
@@ -52,6 +53,7 @@ fun TaskScreen(
     val title = viewModel.title
     val description = viewModel.description
     val priority = viewModel.priority
+    val taskColor = viewModel.taskColor
     val context = LocalContext.current
 
     when (task) {
@@ -97,10 +99,14 @@ fun TaskScreen(
                             viewModel.updateDescription(description)
                         },
                         priority = priority,
+                        taskColor = taskColor,
                         onPrioritySelected = { priority ->
                             viewModel.updatePriority(priority)
-                        }
-                    )
+                        } ,
+                    taskColorSelected = {taskColor ->
+                        viewModel.updateColor(taskColor)
+                    }
+                        )
                 }
             )
         }

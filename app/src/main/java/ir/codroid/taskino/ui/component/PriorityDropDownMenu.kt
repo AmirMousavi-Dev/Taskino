@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.PRIORITY_DROP_DOWN_MENU_HEIGHT
@@ -43,6 +44,7 @@ import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
 @Composable
 fun PriorityDropDownMenu(
     priority: Priority,
+    taskColor: TaskColor,
     onPriorityClicked: (Priority) -> Unit
 ) {
     var expanded by remember {
@@ -61,7 +63,9 @@ fun PriorityDropDownMenu(
             .clickable { expanded = !expanded }
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLE_ALPHA),
+                color = if (taskColor == TaskColor.DEFAULT)
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLE_ALPHA)
+                else taskColor.color.copy(alpha = DISABLE_ALPHA),
                 shape = MaterialTheme.shapes.small
             ),
         verticalAlignment = Alignment.CenterVertically
@@ -114,5 +118,5 @@ fun PriorityDropDownMenu(
 @Composable
 @Preview
 fun PreviewPriorityDropDownMenu() {
-    PriorityDropDownMenu(priority = Priority.LOW, onPriorityClicked = {})
+    PriorityDropDownMenu(priority = Priority.LOW,TaskColor.DEFAULT, onPriorityClicked = {})
 }

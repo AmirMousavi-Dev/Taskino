@@ -46,3 +46,14 @@ val ColorScheme.splashBGColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) DarkGray else Color.White
 
+//---------------------------------radio button colors-----------------------------------//
+val radioRed = Color(0xFFF44336)
+val radioBlue = Color(0xFF03A9F4)
+val radioDarkBlue = Color(0xFF3F51B5)
+val radioGreen = Color(0xFF4CAF50)
+val radioYellow = Color(0xFFFFEB3B)
+val radioOrange = Color(0xFFFF9800)
+val radioPink = Color(0xFFEC407A)
+val radioDarkPurple = Color(0xFF673AB7)
+val radioPurple = Color(0xFF9C27B0)
+

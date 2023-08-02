@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.data.repository.DataStoreRepository
 import ir.codroid.taskino.data.repository.TodoRepository
@@ -81,6 +82,8 @@ class SharedViewModel @Inject constructor(
     var description by mutableStateOf("")
         private set
     var priority by mutableStateOf(Priority.LOW)
+        private set
+    var taskColor by mutableStateOf(TaskColor.DEFAULT)
         private set
     var action by mutableStateOf(Action.NO_ACTION)
         private set
@@ -169,11 +172,13 @@ class SharedViewModel @Inject constructor(
             title = selectedTask.title
             description = selectedTask.description
             priority = selectedTask.priority
+            taskColor = selectedTask.color
         } else {
             id = 0
             title = ""
             description = ""
             priority = Priority.LOW
+            taskColor = TaskColor.DEFAULT
         }
     }
 
@@ -192,7 +197,8 @@ class SharedViewModel @Inject constructor(
         val toDoTask = ToDoTask(
             title = title,
             description = description,
-            priority = priority
+            priority = priority,
+            color = taskColor
         )
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTask(toDoTask = toDoTask)
@@ -205,7 +211,9 @@ class SharedViewModel @Inject constructor(
             id = id,
             title = title,
             description = description,
-            priority = priority
+            priority = priority,
+            color = taskColor
+
         )
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateTask(toDoTask = toDoTask)
@@ -217,7 +225,8 @@ class SharedViewModel @Inject constructor(
             id = id,
             title = title,
             description = description,
-            priority = priority
+            priority = priority,
+            color = taskColor
         )
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTask(toDoTask = toDoTask)
@@ -265,6 +274,10 @@ class SharedViewModel @Inject constructor(
 
     fun updatePriority(newPriority: Priority) {
         priority = newPriority
+    }
+
+    fun updateColor(newTaskColor: TaskColor) {
+        taskColor = newTaskColor
     }
 
     fun updateAction(newAction: Action) {

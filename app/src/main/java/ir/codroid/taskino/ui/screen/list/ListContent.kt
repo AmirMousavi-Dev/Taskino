@@ -56,6 +56,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.theme.LARGEST_PADDING
@@ -139,6 +140,7 @@ fun HandleListContent(
         )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun DisplayTasks(
@@ -163,18 +165,18 @@ fun DisplayTasks(
             val dismissDirection = dismissState.dismissDirection
             val isDismiss = dismissState.isDismissed(DismissDirection.EndToStart)
             var itemAppeared by remember { mutableStateOf(false) }
-            if (isDismiss && dismissDirection == DismissDirection.EndToStart){
+            if (isDismiss && dismissDirection == DismissDirection.EndToStart) {
                 val scope = rememberCoroutineScope()
                 scope.launch {
                     delay(300)
-                onSwipeToDelete(Action.DELETE, task)
+                    onSwipeToDelete(Action.DELETE, task)
                 }
             }
             val degrees by animateFloatAsState(
                 if (dismissState.targetValue == DismissValue.Default) 0f
                 else -45f
             )
-            LaunchedEffect(key1 = true){
+            LaunchedEffect(key1 = true) {
                 itemAppeared = true
             }
 
@@ -196,7 +198,8 @@ fun DisplayTasks(
                     state = dismissState,
                     directions = setOf(DismissDirection.EndToStart),
                     background = {
-                        RedBackground(degrees = degrees) },
+                        RedBackground(degrees = degrees)
+                    },
                     dismissContent = {
                         ListItem(toDoTask = task, navigationToTaskScreen = navigationToTaskScreen)
                     }
@@ -248,8 +251,10 @@ fun ListItem(
                         .fillMaxWidth()
                         .weight(8f),
                     text = toDoTask.title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.listItemTextColor,
+                    style = MaterialTheme.typography.titleLarge,
+                    color =
+                    if (toDoTask.color == TaskColor.DEFAULT) MaterialTheme.colorScheme.listItemTextColor
+                    else toDoTask.color.color,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -269,8 +274,10 @@ fun ListItem(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = toDoTask.description,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.listItemTextColor,
+                style = MaterialTheme.typography.titleSmall,
+                color =
+                if (toDoTask.color == TaskColor.DEFAULT) MaterialTheme.colorScheme.listItemTextColor
+                else toDoTask.color.color,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )

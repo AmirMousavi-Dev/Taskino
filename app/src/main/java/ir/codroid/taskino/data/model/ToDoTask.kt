@@ -1,5 +1,6 @@
 package ir.codroid.taskino.data.model
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ir.codroid.taskino.util.Constants.TODO_TASK_TABLE
@@ -10,5 +11,6 @@ data class ToDoTask(
     val id: Int = 0,
     val title: String,
     val description: String,
-    val priority: Priority
+    val priority: Priority,
+    val color: TaskColor = TaskColor.DEFAULT
 )
