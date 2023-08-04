@@ -30,19 +30,7 @@ fun ColorRadioButton(
     taskColor: TaskColor,
     taskColorSelected: (TaskColor) -> Unit
 ) {
-    val colors = listOf(
-        TaskColor.DEFAULT_COLOR,
-        TaskColor.ORANGE,
-        TaskColor.RED,
-        TaskColor.PINK,
-        TaskColor.PURPLE,
-        TaskColor.DARK_PURPLE,
-        TaskColor.DARK_BLUE,
-        TaskColor.BLUE,
-        TaskColor.GREEN,
-        TaskColor.YELLOW,
-
-        )
+    val colors = TaskColor.values()
     var parentSize by remember { mutableStateOf(IntSize.Zero) }
 
     Row(
