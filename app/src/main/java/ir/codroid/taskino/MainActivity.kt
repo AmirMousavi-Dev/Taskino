@@ -27,6 +27,9 @@ import ir.codroid.taskino.util.LocaleUtil
 @OptIn(ExperimentalAnimationApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    /**
+     * release 1.1
+     */
     private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
