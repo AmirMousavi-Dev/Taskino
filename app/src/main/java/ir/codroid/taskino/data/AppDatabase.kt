@@ -4,8 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import ir.codroid.taskino.data.model.ToDoTask
 
-@Database(entities = [ToDoTask::class] , version = 1 , exportSchema = false)
-abstract class AppDatabase :RoomDatabase() {
+@Database(
+    entities = [ToDoTask::class],
+    version = 2,
+    exportSchema = false
+)
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun todoDao () :ToDoDao
+    abstract fun todoDao(): ToDoDao
 }

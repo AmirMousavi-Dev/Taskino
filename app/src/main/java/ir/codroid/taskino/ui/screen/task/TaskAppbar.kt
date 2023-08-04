@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.data.model.ToDoTask
 import ir.codroid.taskino.ui.component.DisplayAlertDialog
 import ir.codroid.taskino.ui.theme.topAppbarColor
@@ -108,8 +109,9 @@ fun ExistingTaskAppbar(
             navigationIconContentColor = MaterialTheme.colorScheme.topAppbarContentColor
         ),
         actions = {
-            ExitingTaskAppBarAction(selectedTask = selectedTask
-                , navigateToListScreen = navigateToListScreen)
+            ExitingTaskAppBarAction(
+                selectedTask = selectedTask, navigateToListScreen = navigateToListScreen
+            )
         },
         navigationIcon = {
             CloseAction(onAddClick = navigateToListScreen)
@@ -137,9 +139,9 @@ fun ExitingTaskAppBarAction(
 ) {
     val openDialog = remember { mutableStateOf(false) }
     DisplayAlertDialog(
-        title = stringResource(id = R.string.ad_delete_title , selectedTask.title),
-        message =stringResource(id = R.string.ad_delete_message , selectedTask.title),
-        openDialog =openDialog.value,
+        title = stringResource(id = R.string.ad_delete_title, selectedTask.title),
+        message = stringResource(id = R.string.ad_delete_message, selectedTask.title),
+        openDialog = openDialog.value,
         onDismiss = {
             openDialog.value = false
         }) {
@@ -182,7 +184,7 @@ fun PreviewTaskAppbar() {
 
     ExistingTaskAppbar(
         ToDoTask(
-            0, "Codroid-ir", "some random text", Priority.HIGH
+            0, "Codroid-ir", "some random text", Priority.HIGH, TaskColor.DEFAULT_COLOR
         ),
         navigateToListScreen = {})
 }

@@ -18,10 +18,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.TaskColor
-import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.PRIORITY_DROP_DOWN_MENU_HEIGHT
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
@@ -63,9 +61,9 @@ fun PriorityDropDownMenu(
             .clickable { expanded = !expanded }
             .border(
                 width = 1.dp,
-                color = if (taskColor == TaskColor.DEFAULT)
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLE_ALPHA)
-                else taskColor.color.copy(alpha = DISABLE_ALPHA),
+                color = if (taskColor == TaskColor.DEFAULT_COLOR)
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = MEDIUM_ALPHA)
+                else taskColor.color.copy(alpha = MEDIUM_ALPHA),
                 shape = MaterialTheme.shapes.small
             ),
         verticalAlignment = Alignment.CenterVertically
@@ -118,5 +116,5 @@ fun PriorityDropDownMenu(
 @Composable
 @Preview
 fun PreviewPriorityDropDownMenu() {
-    PriorityDropDownMenu(priority = Priority.LOW,TaskColor.DEFAULT, onPriorityClicked = {})
+    PriorityDropDownMenu(priority = Priority.LOW,TaskColor.DEFAULT_COLOR, onPriorityClicked = {})
 }

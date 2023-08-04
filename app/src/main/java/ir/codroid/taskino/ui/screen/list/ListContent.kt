@@ -3,20 +3,13 @@
 package ir.codroid.taskino.ui.screen.list
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -53,12 +46,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import ir.codroid.taskino.R
 import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.data.model.ToDoTask
-import ir.codroid.taskino.ui.component.LoadingCircle
 import ir.codroid.taskino.ui.theme.LARGEST_PADDING
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION
@@ -253,7 +244,7 @@ fun ListItem(
                     text = toDoTask.title,
                     style = MaterialTheme.typography.titleLarge,
                     color =
-                    if (toDoTask.color == TaskColor.DEFAULT) MaterialTheme.colorScheme.listItemTextColor
+                    if (toDoTask.color == TaskColor.DEFAULT_COLOR) MaterialTheme.colorScheme.listItemTextColor
                     else toDoTask.color.color,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -276,7 +267,7 @@ fun ListItem(
                 text = toDoTask.description,
                 style = MaterialTheme.typography.titleSmall,
                 color =
-                if (toDoTask.color == TaskColor.DEFAULT) MaterialTheme.colorScheme.listItemTextColor
+                if (toDoTask.color == TaskColor.DEFAULT_COLOR) MaterialTheme.colorScheme.listItemTextColor
                 else toDoTask.color.color,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
@@ -293,6 +284,7 @@ fun PreviewListContent() {
         0,
         "This is Title for test title design",
         "Some Task To DO , please do that , this text is for testing description design so I have to write some random text here .",
-        Priority.HIGH
+        Priority.HIGH ,
+        TaskColor.DEFAULT_COLOR
     ), navigationToTaskScreen = {})
 }

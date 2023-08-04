@@ -1,6 +1,5 @@
 package ir.codroid.taskino.ui.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -83,7 +81,7 @@ class SharedViewModel @Inject constructor(
         private set
     var priority by mutableStateOf(Priority.LOW)
         private set
-    var taskColor by mutableStateOf(TaskColor.DEFAULT)
+    var taskColor by mutableStateOf(TaskColor.DEFAULT_COLOR)
         private set
     var action by mutableStateOf(Action.NO_ACTION)
         private set
@@ -161,7 +159,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-     fun readUserLanguage() :Language =
+    fun readUserLanguage(): Language =
         dataStoreRepository.readUserLanguage()
 
 
@@ -178,7 +176,7 @@ class SharedViewModel @Inject constructor(
             title = ""
             description = ""
             priority = Priority.LOW
-            taskColor = TaskColor.DEFAULT
+            taskColor = TaskColor.DEFAULT_COLOR
         }
     }
 

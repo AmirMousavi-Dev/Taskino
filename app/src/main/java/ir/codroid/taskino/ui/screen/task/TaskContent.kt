@@ -21,8 +21,8 @@ import ir.codroid.taskino.data.model.Priority
 import ir.codroid.taskino.data.model.TaskColor
 import ir.codroid.taskino.ui.component.ColorRadioButton
 import ir.codroid.taskino.ui.component.PriorityDropDownMenu
-import ir.codroid.taskino.ui.theme.DISABLE_ALPHA
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
+import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.MEDIUM_PADDING
 import ir.codroid.taskino.ui.theme.TOP_PADDING
 
@@ -51,7 +51,7 @@ fun TaskContent(
                 top = TOP_PADDING + LARGE_PADDING
             )
     ) {
-        if (taskColor == TaskColor.DEFAULT) {
+        if (taskColor == TaskColor.DEFAULT_COLOR) {
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -66,8 +66,8 @@ fun TaskContent(
                 modifier = Modifier.fillMaxWidth(),
                 value = title,
                 colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = taskColor.color , unfocusedBorderColor =
-                taskColor.color.copy(alpha = DISABLE_ALPHA) , focusedLabelColor = taskColor.color , unfocusedLabelColor =
-                taskColor.color.copy(alpha = DISABLE_ALPHA)),
+                taskColor.color.copy(alpha = MEDIUM_ALPHA) , focusedLabelColor = taskColor.color , unfocusedLabelColor =
+                taskColor.color.copy(alpha = MEDIUM_ALPHA)),
                 onValueChange = { onTitleChanged(it) },
                 label = { Text(text = stringResource(id = R.string.title)) },
                 textStyle = MaterialTheme.typography.bodyLarge,
@@ -88,7 +88,7 @@ fun TaskContent(
             Modifier.height(MEDIUM_PADDING), color = MaterialTheme.colorScheme.background
         )
         ColorRadioButton(taskColor = taskColor , taskColorSelected = taskColorSelected)
-        if (taskColor == TaskColor.DEFAULT) {
+        if (taskColor == TaskColor.DEFAULT_COLOR) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxSize(),
                 value = description,
@@ -104,8 +104,8 @@ fun TaskContent(
             modifier = Modifier.fillMaxSize(),
             value = description,
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = taskColor.color , unfocusedBorderColor =
-            taskColor.color.copy(alpha = DISABLE_ALPHA) , focusedLabelColor = taskColor.color , unfocusedLabelColor =
-            taskColor.color.copy(alpha = DISABLE_ALPHA)),
+            taskColor.color.copy(alpha = MEDIUM_ALPHA) , focusedLabelColor = taskColor.color , unfocusedLabelColor =
+            taskColor.color.copy(alpha = MEDIUM_ALPHA)),
             onValueChange = { onDescriptionChanged(it) },
             label = { Text(text = stringResource(id = R.string.description)) },
             textStyle = MaterialTheme.typography.bodyLarge,

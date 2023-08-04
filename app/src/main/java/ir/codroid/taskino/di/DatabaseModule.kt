@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.codroid.taskino.data.AppDatabase
+import ir.codroid.taskino.data.repository.DataBaseMigration.MIGRATION_1_2
 import ir.codroid.taskino.util.Constants.TASKINO_DATABASE
 import javax.inject.Singleton
 
@@ -22,7 +23,9 @@ object DatabaseModule {
             context ,
             AppDatabase::class.java,
             TASKINO_DATABASE
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
 
     @Singleton
     @Provides

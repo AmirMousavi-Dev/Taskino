@@ -1,14 +1,7 @@
 package ir.codroid.taskino.data.model
 
-import androidx.annotation.StringRes
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
-import ir.codroid.taskino.R
 import ir.codroid.taskino.ui.theme.MediumGray
-import ir.codroid.taskino.ui.theme.highPriorityColor
-import ir.codroid.taskino.ui.theme.lowPriorityColor
-import ir.codroid.taskino.ui.theme.mediumPriorityColor
-import ir.codroid.taskino.ui.theme.nonePriorityColor
 import ir.codroid.taskino.ui.theme.radioBlue
 import ir.codroid.taskino.ui.theme.radioDarkBlue
 import ir.codroid.taskino.ui.theme.radioDarkPurple
@@ -20,7 +13,7 @@ import ir.codroid.taskino.ui.theme.radioRed
 import ir.codroid.taskino.ui.theme.radioYellow
 
 enum class TaskColor(val color: Color) {
-    DEFAULT(MediumGray),
+    DEFAULT_COLOR(MediumGray),
     ORANGE(radioOrange),
     RED(radioRed),
     PINK(radioPink),
