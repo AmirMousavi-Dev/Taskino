@@ -6,7 +6,7 @@
 
 ## Some Of Insights of App is:
 
-### This is the Home screen of the application. On this page you can see the tasks and the top bar has buttons to search for tasks, sort by priorities, etc. and you can delete them by swiping tasks horizontally.
+### This is the Home screen of the application. On this screen you can see the tasks and the top bar has buttons to search for tasks, sort by priorities, etc. and you can delete them by swiping tasks horizontally.
 
 # ![Home_Screen](https://github.com/codroid-ir/Taskino/assets/119420193/8d826f18-7561-4f98-845c-d2980012a867)
 
