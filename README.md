@@ -14,5 +14,7 @@
  
 # ![Task_Screen](https://github.com/codroid-ir/Taskino/assets/119420193/cac06160-dc34-4e32-9546-ed197a9c8379)
 
+
+## [Click here for download application](https://cafebazaar.ir/app/ir.codroid.taskino)
  
 # Thanks For Giving Precious Time to go through my repository.
