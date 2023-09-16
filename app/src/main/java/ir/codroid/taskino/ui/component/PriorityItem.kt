@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.domain.model.Priority
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
 

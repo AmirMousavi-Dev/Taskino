@@ -23,7 +23,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +38,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.MainActivity
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.domain.model.Priority
 import ir.codroid.taskino.ui.component.ChangeLanguageAlertDialog
 import ir.codroid.taskino.ui.component.DisplayAlertDialog
 import ir.codroid.taskino.ui.component.PriorityItem

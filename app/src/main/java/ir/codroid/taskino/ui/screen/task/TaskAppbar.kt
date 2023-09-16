@@ -21,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
-import ir.codroid.taskino.data.model.TaskColor
-import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
+import ir.codroid.taskino.domain.model.ToDoTask
 import ir.codroid.taskino.ui.component.DisplayAlertDialog
 import ir.codroid.taskino.ui.theme.topAppbarColor
 import ir.codroid.taskino.ui.theme.topAppbarContentColor

@@ -1,13 +1,11 @@
 package ir.codroid.taskino.ui.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.TaskColor
+import ir.codroid.taskino.domain.model.TaskColor
 
 @Composable
 fun CustomRadioButton(

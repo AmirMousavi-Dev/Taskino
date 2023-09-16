@@ -20,7 +20,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import ir.codroid.taskino.data.model.TaskColor
+import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.ui.theme.COLOR_RADIO_GROUP_HEIGHT
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 

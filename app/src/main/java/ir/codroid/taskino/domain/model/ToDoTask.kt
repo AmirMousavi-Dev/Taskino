@@ -1,7 +1,9 @@
-package ir.codroid.taskino.data.model
+package ir.codroid.taskino.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.util.Constants.TODO_TASK_TABLE
 
 @Entity(tableName = TODO_TASK_TABLE)

@@ -33,8 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
-import ir.codroid.taskino.data.model.TaskColor
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.ui.theme.MEDIUM_ALPHA
 import ir.codroid.taskino.ui.theme.PRIORITY_DROP_DOWN_MENU_HEIGHT
 import ir.codroid.taskino.ui.theme.PRIORITY_INDICATOR_SIZE
@@ -116,5 +116,5 @@ fun PriorityDropDownMenu(
 @Composable
 @Preview
 fun PreviewPriorityDropDownMenu() {
-    PriorityDropDownMenu(priority = Priority.LOW,TaskColor.DEFAULT_COLOR, onPriorityClicked = {})
+    PriorityDropDownMenu(priority = Priority.LOW, TaskColor.DEFAULT_COLOR, onPriorityClicked = {})
 }

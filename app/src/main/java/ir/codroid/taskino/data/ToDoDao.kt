@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.domain.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
 
 @Dao

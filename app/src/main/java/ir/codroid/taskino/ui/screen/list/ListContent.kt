@@ -47,9 +47,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
-import ir.codroid.taskino.data.model.TaskColor
-import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
+import ir.codroid.taskino.domain.model.ToDoTask
 import ir.codroid.taskino.ui.theme.LARGEST_PADDING
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
 import ir.codroid.taskino.ui.theme.LIST_ITEM_ELEVATION

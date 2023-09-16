@@ -1,4 +1,4 @@
-package ir.codroid.taskino.data.model
+package ir.codroid.taskino.domain.model
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color

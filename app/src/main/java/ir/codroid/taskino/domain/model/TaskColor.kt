@@ -1,4 +1,4 @@
-package ir.codroid.taskino.data.model
+package ir.codroid.taskino.domain.model
 
 import androidx.compose.ui.graphics.Color
 import ir.codroid.taskino.ui.theme.MediumGray

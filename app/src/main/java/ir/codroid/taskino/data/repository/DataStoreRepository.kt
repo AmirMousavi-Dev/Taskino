@@ -10,7 +10,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
-import ir.codroid.taskino.data.model.Priority
+import ir.codroid.taskino.domain.model.Priority
 import ir.codroid.taskino.util.Constants.PREFERENCE_LANGUAGE_KEY
 import ir.codroid.taskino.util.Constants.PREFERENCE_NAME
 import ir.codroid.taskino.util.Constants.PREFERENCE_SORT_KEY

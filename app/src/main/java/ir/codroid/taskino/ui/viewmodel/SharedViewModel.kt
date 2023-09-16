@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.codroid.taskino.data.model.Priority
-import ir.codroid.taskino.data.model.TaskColor
-import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
+import ir.codroid.taskino.domain.model.ToDoTask
 import ir.codroid.taskino.data.repository.DataStoreRepository
 import ir.codroid.taskino.data.repository.TodoRepository
 import ir.codroid.taskino.ui.theme.MAX_TITLE_LENGTH

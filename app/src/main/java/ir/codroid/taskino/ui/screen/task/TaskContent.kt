@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
-import ir.codroid.taskino.data.model.TaskColor
+import ir.codroid.taskino.domain.model.Priority
+import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.ui.component.ColorRadioButton
 import ir.codroid.taskino.ui.component.PriorityDropDownMenu
 import ir.codroid.taskino.ui.theme.LARGE_PADDING
@@ -120,6 +120,6 @@ fun TaskContent(
 @Preview
 fun PreviewTaskContent() {
     TaskContent(
-        "", {}, "", {}, Priority.HIGH,TaskColor.YELLOW, {}, {}
+        "", {}, "", {}, Priority.HIGH, TaskColor.YELLOW, {}, {}
     )
 }

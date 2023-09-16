@@ -2,7 +2,7 @@ package ir.codroid.taskino.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ir.codroid.taskino.data.model.ToDoTask
+import ir.codroid.taskino.domain.model.ToDoTask
 
 @Database(
     entities = [ToDoTask::class],

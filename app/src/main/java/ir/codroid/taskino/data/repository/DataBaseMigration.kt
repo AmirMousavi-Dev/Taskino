@@ -2,7 +2,7 @@ package ir.codroid.taskino.data.repository
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import ir.codroid.taskino.data.model.TaskColor
+import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.util.Constants.TODO_TASK_TABLE
 
 object DataBaseMigration {

@@ -2,7 +2,6 @@ package ir.codroid.taskino.util
 
 import androidx.annotation.StringRes
 import ir.codroid.taskino.R
-import ir.codroid.taskino.data.model.Priority
 
 enum class Action(@StringRes val title: Int) {
     ADD(R.string.add),
