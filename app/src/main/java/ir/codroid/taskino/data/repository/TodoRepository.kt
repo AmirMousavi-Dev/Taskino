@@ -1,7 +1,7 @@
 package ir.codroid.taskino.data.repository
 
 import dagger.hilt.android.scopes.ViewModelScoped
-import ir.codroid.taskino.data.ToDoDao
+import ir.codroid.taskino.data.data_source.ToDoDao
 import ir.codroid.taskino.domain.model.ToDoTask
 import javax.inject.Inject
 
