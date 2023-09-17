@@ -10,8 +10,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.codroid.taskino.domain.model.Priority
 import ir.codroid.taskino.domain.model.TaskColor
 import ir.codroid.taskino.domain.model.ToDoTask
-import ir.codroid.taskino.data.repository.DataStoreRepository
-import ir.codroid.taskino.data.repository.TodoRepository
+import ir.codroid.taskino.data.repository.DataStoreRepositoryImpl
+import ir.codroid.taskino.data.repository.TodoRepositoryImpl
 import ir.codroid.taskino.ui.theme.MAX_TITLE_LENGTH
 import ir.codroid.taskino.util.Action
 import ir.codroid.taskino.util.Language
@@ -29,8 +29,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
-    private val repository: TodoRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val repository: TodoRepositoryImpl,
+    private val dataStoreRepository: DataStoreRepositoryImpl
 ) : ViewModel() {
 
     var searchAppbarState by mutableStateOf(SearchAppbarState.CLOSED)
@@ -137,7 +137,7 @@ class SharedViewModel @Inject constructor(
 
     fun persistSortState(priority: Priority) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.persistSortState(priority = priority)
+            dataStoreRepository.saveSortState(priority = priority)
         }
     }
 

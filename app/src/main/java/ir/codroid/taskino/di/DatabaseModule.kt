@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ir.codroid.taskino.data.data_source.AppDatabase
+import ir.codroid.taskino.data.local.AppDatabase
 import ir.codroid.taskino.data.repository.DataBaseMigration.MIGRATION_1_2
 import ir.codroid.taskino.util.Constants.TASKINO_DATABASE
 import javax.inject.Singleton

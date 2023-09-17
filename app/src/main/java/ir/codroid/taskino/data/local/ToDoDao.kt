@@ -1,4 +1,4 @@
-package ir.codroid.taskino.data.data_source
+package ir.codroid.taskino.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -16,7 +16,7 @@ interface ToDoDao {
     fun getAllTasks(): Flow<List<ToDoTask>>
 
     @Query("SELECT * FROM todo_task_table WHERE id=:taskId")
-    fun getSelectedTask(taskId: Int): Flow<ToDoTask>
+    fun getSelectedTask(taskId: Int): ToDoTask?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTask(toDoTask: ToDoTask)

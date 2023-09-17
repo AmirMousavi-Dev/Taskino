@@ -1,4 +1,4 @@
-package ir.codroid.taskino.data.data_source
+package ir.codroid.taskino.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
