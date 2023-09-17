@@ -1,6 +1,6 @@
 package ir.codroid.taskino.domain.use_case
 
-data class TaskListUseCases(
+data class ListUseCases(
     val getAllTaskUseCase: GetAllTaskUseCase,
     val searchTaskUseCase: SearchTaskUseCase,
     val deleteAllTaskUseCase: DeleteAllTaskUseCase,

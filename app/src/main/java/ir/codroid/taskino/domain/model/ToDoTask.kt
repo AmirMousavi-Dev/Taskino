@@ -15,3 +15,5 @@ data class ToDoTask(
     val priority: Priority,
     val color: TaskColor = TaskColor.DEFAULT_COLOR
 )
+
+class InvalidTodoTaskException(message: String) : Exception(message)

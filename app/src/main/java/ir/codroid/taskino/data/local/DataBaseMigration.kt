@@ -1,4 +1,4 @@
-package ir.codroid.taskino.data.repository
+package ir.codroid.taskino.data.local
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

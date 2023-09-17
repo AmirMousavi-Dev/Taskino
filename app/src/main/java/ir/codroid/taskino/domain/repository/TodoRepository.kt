@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface TodoRepository {
     suspend fun addTask(toDoTask: ToDoTask)
 
-    suspend fun updateTask(toDoTask: ToDoTask)
-
     suspend fun deleteTask(toDoTask: ToDoTask)
 
     suspend fun deleteAllTask()

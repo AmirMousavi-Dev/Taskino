@@ -10,12 +10,14 @@ import ir.codroid.taskino.domain.use_case.AddTaskUseCase
 import ir.codroid.taskino.domain.use_case.DeleteAllTaskUseCase
 import ir.codroid.taskino.domain.use_case.DeleteTaskUseCase
 import ir.codroid.taskino.domain.use_case.GetAllTaskUseCase
+import ir.codroid.taskino.domain.use_case.GetSelectedTaskUseCase
 import ir.codroid.taskino.domain.use_case.ReadLanguageUseCase
 import ir.codroid.taskino.domain.use_case.ReadSortStateUseCase
 import ir.codroid.taskino.domain.use_case.SaveLanguageUseCase
 import ir.codroid.taskino.domain.use_case.SaveSortStateUseCase
 import ir.codroid.taskino.domain.use_case.SearchTaskUseCase
-import ir.codroid.taskino.domain.use_case.TaskListUseCases
+import ir.codroid.taskino.domain.use_case.ListUseCases
+import ir.codroid.taskino.domain.use_case.TaskUseCases
 import javax.inject.Singleton
 
 @Module
@@ -24,10 +26,10 @@ object UseCasesModule {
 
     @Singleton
     @Provides
-    fun provideTaskListUseCases(
+    fun provideListUseCases(
         todoRepository: TodoRepository,
         dataStoreRepository: DataStoreRepository
-    ): TaskListUseCases = TaskListUseCases(
+    ): ListUseCases = ListUseCases(
         getAllTaskUseCase = GetAllTaskUseCase(todoRepository),
         searchTaskUseCase = SearchTaskUseCase(todoRepository),
         deleteAllTaskUseCase = DeleteAllTaskUseCase(todoRepository),
@@ -38,5 +40,16 @@ object UseCasesModule {
         saveSortStateUseCase = SaveSortStateUseCase(dataStoreRepository),
         readSortStateUseCase = ReadSortStateUseCase(dataStoreRepository)
     )
+
+    @Singleton
+    @Provides
+    fun provideTaskUseCases(
+        todoRepository: TodoRepository,
+    ): TaskUseCases = TaskUseCases(
+        deleteTaskUseCase = DeleteTaskUseCase(todoRepository),
+        addTaskUseCase = AddTaskUseCase(todoRepository),
+        getSelectedTaskUseCase = GetSelectedTaskUseCase(todoRepository)
+    )
+
 
 }

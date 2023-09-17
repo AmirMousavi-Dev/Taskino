@@ -18,11 +18,8 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_task_table WHERE id=:taskId")
     fun getSelectedTask(taskId: Int): ToDoTask?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTask(toDoTask: ToDoTask)
-
-    @Update()
-    suspend fun updateTask(toDoTask: ToDoTask)
 
     @Delete()
     suspend fun deleteTask(toDoTask: ToDoTask)

@@ -19,10 +19,6 @@ class TodoRepositoryImpl @Inject constructor(private val todoDao: ToDoDao) :Todo
         todoDao.addTask(toDoTask)
     }
 
-    override suspend fun updateTask(toDoTask: ToDoTask) {
-        todoDao.updateTask(toDoTask)
-    }
-
     override suspend fun deleteTask(toDoTask: ToDoTask) {
         todoDao.deleteTask(toDoTask)
     }
