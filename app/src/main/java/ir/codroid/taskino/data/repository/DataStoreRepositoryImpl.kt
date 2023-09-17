@@ -32,35 +32,15 @@ class DataStoreRepositoryImpl @Inject constructor(
         emit(dataStore.getString(PREFERENCE_SORT_KEY) ?: Priority.NONE.name)
     }
 
-//    = dataStore
-//        .catch { exception ->
-//            if (exception is IOException)
-//                emit(emptyPreferences())
-//            else
-//                throw exception
-//        }
-//        .map { preferences ->
-//            val sortData = preferences[PreferenceKeys.sortKey] ?: Priority.NONE.name
-//            sortData
-//        }
+
 
     override suspend fun saveUserLanguage(language: Language) =
         dataStore.putString(PREFERENCE_LANGUAGE_KEY, language.name)
-//        runBlocking {
-//        dataStore.edit { preferences ->
-//            preferences[PreferenceKeys.languageKey] = language.name
-//        }
-//            delay(600)
-//    }
+
 
     override fun readUserLanguage(): Flow<String> = flow {
         emit(dataStore.getString(PREFERENCE_LANGUAGE_KEY) ?: Language.ENGLISH.name)
     }
-//        runBlocking {
-//        Language.valueOf(
-//            dataStore.data.first()[PreferenceKeys.languageKey] ?: Language.ENGLISH.name
-//        )
-//    }
 
 
 }

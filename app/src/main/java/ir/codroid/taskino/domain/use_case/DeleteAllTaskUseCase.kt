@@ -6,5 +6,6 @@ import javax.inject.Inject
 class DeleteAllTaskUseCase @Inject constructor(
     private val repository: TodoRepository
 ) {
+    suspend operator fun invoke() = repository.deleteAllTask()
 
 }

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetSelectedTaskUseCase @Inject constructor(
     private val repository: TodoRepository
 ) {
-
+    operator fun invoke(taskId: Int) = repository.getSelectedTask(taskId)
 }
