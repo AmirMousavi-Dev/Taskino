@@ -12,6 +12,11 @@ class GetAllTaskUseCase @Inject constructor(
     private val repository: TodoRepository
 ) {
 
-    operator fun invoke(): Flow<List<ToDoTask>> = repository.getAllTask()
+    operator fun invoke(priority: Priority = Priority.NONE): Flow<List<ToDoTask>> =
+        when (priority) {
+            Priority.HIGH -> repository.getAllTaskSortByHighPriority()
+            Priority.LOW -> repository.getAllTaskSortByLowPriority()
+            else -> repository.getAllTask()
+        }
 
 }

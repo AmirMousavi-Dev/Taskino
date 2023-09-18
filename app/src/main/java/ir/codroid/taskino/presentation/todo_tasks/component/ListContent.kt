@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package ir.codroid.taskino.ui.screen.list
+package ir.codroid.taskino.presentation.todo_tasks.component
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -59,66 +59,13 @@ import ir.codroid.taskino.ui.theme.highPriorityColor
 import ir.codroid.taskino.ui.theme.listItemBackgroundColor
 import ir.codroid.taskino.ui.theme.listItemTextColor
 import ir.codroid.taskino.util.Action
-import ir.codroid.taskino.util.RequestState
-import ir.codroid.taskino.util.SearchAppbarState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun ListContent(
-    allTasks: RequestState<List<ToDoTask>>,
-    searchTasks: RequestState<List<ToDoTask>>,
-    lowPriorityTasks: List<ToDoTask>,
-    highPriorityTasks: List<ToDoTask>,
-    searchAppbarState: SearchAppbarState,
-    sortState: RequestState<Priority>,
-    onSwipeToDelete: (Action, ToDoTask) -> Unit,
-    navigationToTaskScreen: (taskId: Int) -> Unit
-) {
-
-    if (sortState is RequestState.Success) {
-        when {
-            searchAppbarState == SearchAppbarState.TRIGGERED -> {
-                if (searchTasks is RequestState.Success)
-                    HandleListContent(
-                        tasks = searchTasks.data,
-                        onSwipeToDelete = onSwipeToDelete,
-                        navigationToTaskScreen = navigationToTaskScreen
-                    )
-            }
-
-            sortState.data == Priority.NONE -> {
-                if (allTasks is RequestState.Success)
-                    HandleListContent(
-                        tasks = allTasks.data,
-                        onSwipeToDelete = onSwipeToDelete,
-                        navigationToTaskScreen = navigationToTaskScreen
-                    )
-            }
-
-            sortState.data == Priority.LOW -> {
-                HandleListContent(
-                    tasks = lowPriorityTasks,
-                    onSwipeToDelete = onSwipeToDelete,
-                    navigationToTaskScreen = navigationToTaskScreen
-                )
-            }
-
-            sortState.data == Priority.HIGH -> {
-                HandleListContent(
-                    tasks = highPriorityTasks,
-                    onSwipeToDelete = onSwipeToDelete,
-                    navigationToTaskScreen = navigationToTaskScreen
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun HandleListContent(
     tasks: List<ToDoTask>,
-    onSwipeToDelete: (Action, ToDoTask) -> Unit,
+    onSwipeToDelete: (ToDoTask) -> Unit,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
     if (tasks.isEmpty())
@@ -136,7 +83,7 @@ fun HandleListContent(
 @Composable
 fun DisplayTasks(
     tasks: List<ToDoTask>,
-    onSwipeToDelete: (Action, ToDoTask) -> Unit,
+    onSwipeToDelete: (ToDoTask) -> Unit,
     navigationToTaskScreen: (taskId: Int) -> Unit
 ) {
     LazyColumn(
@@ -160,7 +107,7 @@ fun DisplayTasks(
                 val scope = rememberCoroutineScope()
                 scope.launch {
                     delay(300)
-                    onSwipeToDelete(Action.DELETE, task)
+                    onSwipeToDelete(task)
                 }
             }
             val degrees by animateFloatAsState(
@@ -284,7 +231,7 @@ fun PreviewListContent() {
         0,
         "This is Title for test title design",
         "Some Task To DO , please do that , this text is for testing description design so I have to write some random text here .",
-        Priority.HIGH ,
+        Priority.HIGH,
         TaskColor.DEFAULT_COLOR
     ), navigationToTaskScreen = {})
 }

@@ -38,4 +38,6 @@
     <string name="language">انتخاب زبان</string>
     <string name="persian">فارسی</string>
     <string name="english">انگلیسی</string>
+    <string name="invalid_title">The title of the todoTask cannot be empty!</string>
+    <string name="invalid_description">The description of the todoTask cannot be empty!</string>
 </resources>

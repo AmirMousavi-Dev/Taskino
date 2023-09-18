@@ -1,4 +1,4 @@
-package ir.codroid.taskino.ui.screen.list
+package ir.codroid.taskino.presentation.todo_tasks.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

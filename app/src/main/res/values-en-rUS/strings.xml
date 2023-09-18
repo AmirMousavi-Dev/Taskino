@@ -39,4 +39,6 @@
     <string name="language">Select language</string>
     <string name="persian">Persian</string>
     <string name="english">English</string>
+    <string name="invalid_title">عنوان نمیتواند خالی باشد!</string>
+    <string name="invalid_description">توضیحات نمیتواند خالی باشد!</string>
 </resources>

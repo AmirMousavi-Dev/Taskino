@@ -14,6 +14,10 @@ interface TodoRepository {
 
     fun getAllTask(): Flow<List<ToDoTask>>
 
+    fun getAllTaskSortByLowPriority(): Flow<List<ToDoTask>>
+
+    fun getAllTaskSortByHighPriority(): Flow<List<ToDoTask>>
+
     fun searchTask(searchQuery: String): Flow<List<ToDoTask>>
 
 

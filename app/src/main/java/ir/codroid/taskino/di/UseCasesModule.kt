@@ -1,8 +1,10 @@
 package ir.codroid.taskino.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.codroid.taskino.domain.repository.DataStoreRepository
 import ir.codroid.taskino.domain.repository.TodoRepository
@@ -28,13 +30,14 @@ object UseCasesModule {
     @Provides
     fun provideListUseCases(
         todoRepository: TodoRepository,
-        dataStoreRepository: DataStoreRepository
+        dataStoreRepository: DataStoreRepository ,
+        @ApplicationContext context: Context
     ): ListUseCases = ListUseCases(
         getAllTaskUseCase = GetAllTaskUseCase(todoRepository),
         searchTaskUseCase = SearchTaskUseCase(todoRepository),
         deleteAllTaskUseCase = DeleteAllTaskUseCase(todoRepository),
         deleteTaskUseCase = DeleteTaskUseCase(todoRepository),
-        addTaskUseCase = AddTaskUseCase(todoRepository),
+        addTaskUseCase = AddTaskUseCase(todoRepository , context),
         saveLanguageUseCase = SaveLanguageUseCase(dataStoreRepository),
         readLanguageUseCase = ReadLanguageUseCase(dataStoreRepository),
         saveSortStateUseCase = SaveSortStateUseCase(dataStoreRepository),
@@ -45,9 +48,10 @@ object UseCasesModule {
     @Provides
     fun provideTaskUseCases(
         todoRepository: TodoRepository,
+        @ApplicationContext context: Context
     ): TaskUseCases = TaskUseCases(
         deleteTaskUseCase = DeleteTaskUseCase(todoRepository),
-        addTaskUseCase = AddTaskUseCase(todoRepository),
+        addTaskUseCase = AddTaskUseCase(todoRepository , context),
         getSelectedTaskUseCase = GetSelectedTaskUseCase(todoRepository)
     )
 

@@ -1,4 +1,4 @@
-package ir.codroid.taskino.ui.screen.list
+package ir.codroid.taskino.presentation.todo_tasks.component
 
 import android.app.Activity
 import android.content.Intent
@@ -56,27 +56,24 @@ import ir.codroid.taskino.util.SearchAppbarState
 
 @Composable
 fun ListAppbar(
-    viewModel: SharedViewModel,
-    onSearchClicked: (String) -> Unit,
+    searchText :String,
+    userLanguage: Language,
+    searchTodoTask: (String) -> Unit,
     onSortClicked: (Priority) -> Unit,
     searchAppbarState: SearchAppbarState,
+    onUserLanguageClicked : (Language) ->Unit,
+    onSearchClicked : () ->Unit,
     onDelete: () -> Unit
 ) {
     val activity = LocalContext.current as Activity
     when (searchAppbarState) {
         SearchAppbarState.CLOSED -> {
             DefaultListAppbar(
-                userLanguage = viewModel.userLanguage,
+                userLanguage = userLanguage,
                 onLanguageClicked = { language ->
-                    viewModel.saveUserLanguage(language)
-                    activity.apply {
-                        finish()
-                        startActivity(Intent(this, MainActivity::class.java))
-                    }
+                    onUserLanguageClicked(language)
                 },
-                onSearchClicked = {
-                    viewModel.updateSearchAppbarState(SearchAppbarState.OPENED)
-                },
+                onSearchClicked = onSearchClicked,
                 onSortClicked = onSortClicked,
                 onDeleteAllConfirm = onDelete
             )
@@ -84,15 +81,13 @@ fun ListAppbar(
 
         else -> {
             SearchAppbar(
-                text = viewModel.searchAppbarTextState,
+                text = searchText,
                 onTextChanged = { newText ->
-                    viewModel.updateSearchAppbarTextState(newText)
+                    searchTodoTask(newText)
                 },
-                onCloseClicked = {
-                    viewModel.updateSearchAppbarState(SearchAppbarState.CLOSED)
-                },
+                onCloseClicked = onSearchClicked,
                 onSearchClicked = {
-                    onSearchClicked(it)
+                    searchTodoTask(it)
                 }
             )
         }
