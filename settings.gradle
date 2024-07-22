@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Taskino"
 include ':app'
+include ':core'
+include ':onboarding'
+include ':onboarding:onboarding_presentation'
+include ':onboarding:onboarding_domain'
+include ':core_ui'
