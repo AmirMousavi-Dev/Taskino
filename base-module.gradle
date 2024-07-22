@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+android {
+    compileSdk libs.versions.projectCompileSdkVersion.get().toInteger()
+
+
+    defaultConfig {
+        minSdk libs.versions.projectMinSdkVersion.get().toInteger()
+        targetSdk libs.versions.projectTargetSdkVersion.get().toInteger()
+        versionCode libs.versions.projectVersionCode.get().toInteger()
+        versionName libs.versions.projectVersionName.get()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+
+    kapt libs.hilt.compiler
+    implementation libs.hilt.android
+    implementation libs.androidx.datastore.preferences
+
+    testImplementation libs.junit
+
+
+}
