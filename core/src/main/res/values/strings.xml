@@ -1,0 +1,6 @@
+<resources>
+    <string name="welcome_to_taskino">Welcome to Taskino!</string>
+    <string name="welcome_message">Here, you can effortlessly capture your thoughts, ideas, and reminders, anytime and anywhere. Our app is designed to be your personal companion for staying organized and productive on the go. Whether you\'re jotting down quick notes, creating detailed to-do lists, or drafting important memos, we\'ve got you covered with a seamless and intuitive user experience.</string>
+    <string name="lets_go">Let\'s go!</string>
+
+</resources>
