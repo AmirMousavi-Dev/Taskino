@@ -1,5 +1,9 @@
 package ir.codroid.onboarding_presentation.welcome_screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +21,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,10 +38,15 @@ import ir.codroid.core_ui.util.TaskinoPreviews
 
 @Composable
 fun WelcomeScreen(
-    onClick : () -> Unit
+    onClick: () -> Unit
 ) {
 
     val spacing = LocalSpacing.current
+    var visible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        visible = true
+    }
 
     Box(
         modifier = Modifier
@@ -46,59 +60,74 @@ fun WelcomeScreen(
                 .fillMaxWidth()
                 .fillMaxHeight(0.75f)
         ) {
+
             Card(
                 modifier = Modifier
                     .fillMaxSize(),
-                onClick = {} ,
+                onClick = {},
                 shape = RoundedCornerShape(
-                    topStart = spacing.spaceLarge ,
-                    topEnd = spacing.spaceLarge),
+                    topStart = spacing.spaceLarge,
+                    topEnd = spacing.spaceLarge
+                ),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.background
                 ),
                 enabled = false
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.BottomEnd
+            )
+            {
+                AnimatedVisibility(
+                    visible = visible,
+                    enter =
+                    fadeIn(initialAlpha = 0.3f) +
+                            slideInHorizontally()
                 ) {
-                    Button(
+                    Box(
                         modifier = Modifier
-                            .padding(spacing.spaceMedium),
-                        onClick = {
-                            onClick()
-                        }) {
-                        Text(text = stringResource(id = ir.codroid.core.R.string.lets_go))
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.BottomEnd
+                    ) {
+                        Button(
+                            modifier = Modifier
+                                .padding(spacing.spaceMedium),
+                            onClick = {
+                                onClick()
+                            }) {
+                            Text(text = stringResource(id = ir.codroid.core.R.string.lets_go))
+                        }
+
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.Start,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+
+                            Text(
+                                text = stringResource(id = ir.codroid.core.R.string.welcome_to_taskino),
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        spacing.spaceMedium
+                                    )
+                            )
+
+                            Text(
+                                text = stringResource(id = ir.codroid.core.R.string.welcome_message),
+                                style = MaterialTheme.typography.titleSmall,
+                                textAlign = TextAlign.Justify,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        spacing.spaceMedium
+                                    )
+                            )
+
+                        }
                     }
-
-                Column(modifier = Modifier.fillMaxSize() ,
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Center) {
-
-                    Text(
-                    text = stringResource(id = ir.codroid.core.R.string.welcome_to_taskino),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            spacing.spaceMedium
-                        ))
-
-                    Text(
-                        text = stringResource(id = ir.codroid.core.R.string.welcome_message),
-                        style = MaterialTheme.typography.titleSmall,
-                        textAlign = TextAlign.Justify,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                spacing.spaceMedium
-                            ))
-
                 }
-                }
+
 
             }
         }
@@ -106,15 +135,24 @@ fun WelcomeScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = spacing.spaceExtraLarge) ,
-            contentAlignment = Alignment.TopCenter) {
-            Column{
+                .padding(top = spacing.spaceExtraLarge),
+            contentAlignment = Alignment.TopCenter
+        ) {
+
+            AnimatedVisibility(
+                visible = visible,
+                enter =
+                fadeIn(initialAlpha = 0.3f) +
+                        scaleIn()
+            ) {
+
                 Image(
                     painter = painterResource(id = R.drawable.img_wellcome_screen),
                     contentDescription = stringResource(id = ir.codroid.core.R.string.welcome_to_taskino),
                     modifier = Modifier.size(300.dp)
                 )
             }
+
         }
     }
 }
@@ -123,7 +161,7 @@ fun WelcomeScreen(
 @TaskinoPreviews
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen(){
+    WelcomeScreen {
 
     }
 }
