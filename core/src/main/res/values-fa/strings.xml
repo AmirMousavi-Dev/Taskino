@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_to_taskino">!به تسکینو خوش اومدی</string>
+    <string name="welcome_message">اینجا میتونی هر وقت که خواستی به آسونی هر چیزی رو که میخوای یادداشت کنی، تسکینو برای این طراحی شده که همراه شخصی شما برای سازماندهی و بهبود بهره‌وری یادداشت هات باشه، با ما میتونی سریع یادداشت هاتو با تمام جزئیاتشون رو بسازی.</string>
+    <string name="lets_go">بزن بریم!</string>
+</resources>
